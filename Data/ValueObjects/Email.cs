@@ -7,17 +7,17 @@ namespace Data.ValueObjects
     internal class Email : ValueObject
     {
         public string Address { get; private set; } = null!;
-        //TODO: implantar verification
-
-
-        private Email() { }
+        public Verification Verification { get; set; } = new Verification();
 
         const string Pattern = @"\w+@\w+\.\w+";
 
         private static Regex EmailRegex = new Regex(Pattern);
 
+        private Email() { }
+
         public Email(string address)
         {
+            Validate(address);
             Address = address;
         }
 
@@ -35,5 +35,6 @@ namespace Data.ValueObjects
 
         public override string ToString() => Address;
 
+        public void ResendVerificationCode() => Verification = new Verification();
     }
 }
