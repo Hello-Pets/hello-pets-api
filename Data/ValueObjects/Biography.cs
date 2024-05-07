@@ -14,7 +14,7 @@ public class Biography : ValueObject, IEquatable<Biography>
         Description = description.Trim();
     }
 
-    private Biography() {}
+    public Biography() {}
 
     public void Validate(string description) {
         description = description.Trim();

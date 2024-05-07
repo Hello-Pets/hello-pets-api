@@ -15,7 +15,7 @@ public class BodyMetrics : ValueObject, IEquatable<BodyMetrics>
         Weight = weight;
     }
 
-    private BodyMetrics() {}
+    public BodyMetrics() {}
 
     private void Validate(decimal height, decimal length, decimal weight)
     {

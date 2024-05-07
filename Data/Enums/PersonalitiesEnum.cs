@@ -16,5 +16,6 @@ public enum PersonalitiesEnum
     Stubborn,
     Friendly,
     Adventurous,
-    Lazy
+    Lazy,
+    Other
 }
