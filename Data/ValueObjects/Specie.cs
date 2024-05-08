@@ -17,7 +17,7 @@ public class Specie : ValueObject, IEquatable<Specie>
         Breed = breed.Trim();
     }
 
-    private Specie() {}
+    public Specie() {}
 
     private void Validate(int petSpecie, string breed)
     {

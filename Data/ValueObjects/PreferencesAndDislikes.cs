@@ -11,7 +11,7 @@ public class PreferencesAndDislikes : ValueObject, IEquatable<PreferencesAndDisl
     public PreferencesAndDislikes() {}
 
     [JsonConstructor]
-    private PreferencesAndDislikes(List<string> preferences, List<string> dislikes)
+    public PreferencesAndDislikes(List<string> preferences, List<string> dislikes)
     {
         Preferences = preferences ?? new List<string>();
         Dislikes = dislikes ?? new List<string>();
