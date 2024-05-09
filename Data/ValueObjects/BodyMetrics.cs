@@ -2,11 +2,11 @@ namespace HelloPets.Data.ValueObjects;
 
 public class BodyMetrics : ValueObject, IEquatable<BodyMetrics>
 {
-    public decimal Height { get; private set; } = 0.0m;
-    public decimal Length { get; private set; } = 0.0m;
-    public decimal Weight { get; private set; } = 0.0m;
+    public decimal Height { get; private set; }
+    public decimal Length { get; private set; }
+    public decimal Weight { get; private set; }
 
-    public BodyMetrics(decimal height, decimal length, decimal weight)
+    public BodyMetrics(decimal height = 0.0m, decimal length = 0.0m, decimal weight = 0.0m)
     {
         Validate(height,length,weight);
 
@@ -15,7 +15,7 @@ public class BodyMetrics : ValueObject, IEquatable<BodyMetrics>
         Weight = weight;
     }
 
-    public BodyMetrics() {}
+    private BodyMetrics() {}
 
     private void Validate(decimal height, decimal length, decimal weight)
     {

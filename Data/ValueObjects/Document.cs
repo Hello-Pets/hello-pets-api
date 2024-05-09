@@ -9,7 +9,7 @@ public class Document : ValueObject, IEquatable<Document>
     public DocumentTypeEnum Type { get; private set; }
 
     [JsonConstructor]
-    public Document(string number, int type)
+    public Document(int type, string number = "")
     {
         Validate(number, type);
 
@@ -17,7 +17,7 @@ public class Document : ValueObject, IEquatable<Document>
         Type = (DocumentTypeEnum)type;
     }
 
-    private Document() {}
+    public Document() {}
 
     public void Validate(string number, int type) {
         if(!Enum.IsDefined(typeof(DocumentTypeEnum), type)) throw new ArgumentException("Invalid document type");
@@ -31,9 +31,9 @@ public class Document : ValueObject, IEquatable<Document>
 
             if(!number.Any(char.IsDigit)) throw new ArgumentException ("Document number must only contain digits");
         } else if (docType == DocumentTypeEnum.Passport) {
-            if(number.Length > 9 || number.Length < 6) throw new ArgumentException("Passport number must contain between 6 and 9 digits");
-        } else {
-            if(number.Length < 1 || number.Length > 20) throw new ArgumentException("Document number must contain between 1 and 20 characters");
+            if(number.Length > 9 || number.Length < 6) throw new ArgumentException("Passport number must contain between 6 and 9 characters");
+        } else if (docType == DocumentTypeEnum.Other) {
+            if(number.Length < 0 || number.Length > 20) throw new ArgumentException("Document number must contain between 0 and 20 characters");
         }
     }
 

@@ -5,7 +5,7 @@ namespace HelloPets.Data.ValueObjects;
 
 public class Nickname : ValueObject, IEquatable<Nickname>
 {
-    public string Name { get; private set; } = string.Empty;
+    public string Name { get; private set; } = null!;
 
     [JsonConstructor]
     public Nickname(string nickname)
@@ -22,9 +22,11 @@ public class Nickname : ValueObject, IEquatable<Nickname>
     {
         nickname = nickname.Trim();
 
-        if(nickname is null) throw new NullReferenceException("Nickname cannot be null");
+        if(string.IsNullOrEmpty(nickname)) throw new ArgumentException("Nickname cannot be null or empty");
 
         if(nickname.Length < 2 || nickname.Length > 20) throw new ArgumentException("Nickname must contain between 2 and 20 characters");
+
+        if(nickname.Any(c => char.IsPunctuation(c)) || nickname.Any(c => char.IsDigit(c))) throw new ArgumentException("Nickname cannot contain digit or pontuaction");
     }
 
     public static implicit operator string(Nickname nickname) => nickname.ToString();
