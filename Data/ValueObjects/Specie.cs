@@ -6,10 +6,10 @@ namespace HelloPets.Data.ValueObjects;
 public class Specie : ValueObject, IEquatable<Specie>
 {
     public SpecieEnum PetSpecie { get; private set; }
-    public string Breed { get; private set; } = string.Empty;
+    public string Breed { get; private set; } = null!;
 
     [JsonConstructor]
-    public Specie(int petSpecie, string breed)
+    public Specie(int petSpecie, string breed = "")
     {
         Validate(petSpecie, breed);
 
@@ -17,7 +17,7 @@ public class Specie : ValueObject, IEquatable<Specie>
         Breed = breed.Trim();
     }
 
-    public Specie() {}
+    private Specie() {}
 
     private void Validate(int petSpecie, string breed)
     {
