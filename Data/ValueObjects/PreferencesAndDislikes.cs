@@ -4,11 +4,11 @@ namespace HelloPets.Data.ValueObjects;
 
 public class PreferencesAndDislikes : ValueObject, IEquatable<PreferencesAndDislikes>
 {
-    public List<string> Preferences { get; private set; } = new List<string>();
+    public List<string> Preferences { get; private set; } = null!;
 
-    public List<string> Dislikes { get; private set; } = new List<string>();
+    public List<string> Dislikes { get; private set; } = null!;
 
-    public PreferencesAndDislikes() {}
+    private PreferencesAndDislikes() {}
 
     [JsonConstructor]
     public PreferencesAndDislikes(List<string> preferences, List<string> dislikes)
@@ -18,15 +18,20 @@ public class PreferencesAndDislikes : ValueObject, IEquatable<PreferencesAndDisl
     }
 
     public void AddPreference(string preference) {
-        Validate(preference);
+        Validate(preference.Trim());
         Preferences.Add(preference.Trim());
     }
 
     public void AddDislike(string dislike) {
-        Validate(dislike);
+        Validate(dislike.Trim());
         Dislikes.Add(dislike.Trim());
     }
 
+    public void RemoveDislike(string dislike) => Dislikes.Remove(dislike);
+
+    public void RemovePreference(string preference) => Preferences.Remove(preference);
+
+    // TODO: Adicionar validacoes para palavroes.
     private void Validate(string preferenceOrDislike)
     {
         preferenceOrDislike = preferenceOrDislike.Trim();
@@ -44,5 +49,5 @@ public class PreferencesAndDislikes : ValueObject, IEquatable<PreferencesAndDisl
 
     public override int GetHashCode() => Preferences.Concat(Dislikes).GetHashCode();
 
-    public bool Equals(PreferencesAndDislikes? preferencesAndDislikes) => Preferences.SequenceEqual(preferencesAndDislikes.Preferences) && Dislikes.SequenceEqual(preferencesAndDislikes.Dislikes);
+    public bool Equals(PreferencesAndDislikes? preferencesAndDislikes) => preferencesAndDislikes is not null && Preferences.SequenceEqual(preferencesAndDislikes.Preferences) && Dislikes.SequenceEqual(preferencesAndDislikes.Dislikes);
 }
