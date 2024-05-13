@@ -4,6 +4,8 @@ namespace HelloPets.Data.ValueObjects;
 
 public class PreferencesAndDislikes : ValueObject, IEquatable<PreferencesAndDislikes>
 {
+    //TODO: Adicionar metodo para remover preferencias e dislikes
+
     public List<string> Preferences { get; private set; } = null!;
 
     public List<string> Dislikes { get; private set; } = null!;
