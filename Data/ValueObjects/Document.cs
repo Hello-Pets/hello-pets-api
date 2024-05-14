@@ -9,7 +9,7 @@ public class Document : ValueObject, IEquatable<Document>
     public DocumentTypeEnum Type { get; private set; }
 
     [JsonConstructor]
-    public Document(int type, string number = "")
+    public Document(int type = 0, string number = "")
     {
         Validate(number, type);
 
@@ -17,7 +17,7 @@ public class Document : ValueObject, IEquatable<Document>
         Type = (DocumentTypeEnum)type;
     }
 
-    public Document() {}
+    private Document() {}
 
     public void Validate(string number, int type) {
         if(!Enum.IsDefined(typeof(DocumentTypeEnum), type)) throw new ArgumentException("Invalid document type");
