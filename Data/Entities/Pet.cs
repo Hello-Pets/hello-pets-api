@@ -56,23 +56,23 @@ public class Pet : Entity
 
     public void UpdatePet(List<string>? preferences, List<string>? dislikes, string? photo, int? documentTypeEnum, string? documentNumber, DateTime? birthDate, int? petSpecieEnum, string? petBreed, string? nickName, string? miniBio, int? petsCoatsEnum, decimal? height, decimal? length, decimal? weight, int? personality, bool? neutered, bool? hasMicrochip, bool? specialNeeds) {
         Photo = photo ?? Photo;
-        if (documentNumber != null && documentTypeEnum != null) Document = new Document(documentTypeEnum.Value, documentNumber);
+        if (documentNumber is not null && documentTypeEnum is not null) Document = new Document(documentTypeEnum.Value, documentNumber);
         else Document = Document;
 
         BirthDate = birthDate ?? BirthDate;
-        if(preferences != null && dislikes != null) PreferencesAndDislikes = new PreferencesAndDislikes(preferences, dislikes);
+        if(preferences is not null && dislikes is not null) PreferencesAndDislikes = new PreferencesAndDislikes(preferences, dislikes);
         else PreferencesAndDislikes = PreferencesAndDislikes;
 
-        if(petSpecieEnum != null && petBreed != null) Specie = new Specie(petSpecieEnum.Value, petBreed);
+        if(petSpecieEnum is not null && petBreed is not null) Specie = new Specie(petSpecieEnum.Value, petBreed);
         else Specie = Specie;
 
-        if(nickName != null) Nickname = new Nickname(nickName);
+        if(nickName is not null) Nickname = new Nickname(nickName);
         else Nickname = Nickname;
 
-        if(miniBio != null) MiniBio = new MiniBio(miniBio);
+        if(miniBio is not null) MiniBio = new MiniBio(miniBio);
         else MiniBio = MiniBio;
 
-        if(height != null && length != null && weight != null) BodyMetrics = new BodyMetrics(height.Value, length.Value, weight.Value);
+        if(height is not null && length is not null && weight is not null) BodyMetrics = new BodyMetrics(height.Value, length.Value, weight.Value);
         else BodyMetrics = BodyMetrics;
 
         Neutered = neutered ?? Neutered;

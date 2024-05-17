@@ -10,7 +10,7 @@ public class Nickname : ValueObject, IEquatable<Nickname>
     [JsonConstructor]
     public Nickname(string nickname)
     {
-        Validate(nickname);
+        Validate(nickname.Trim());
 
         Name = nickname.Trim();
     }
@@ -20,8 +20,6 @@ public class Nickname : ValueObject, IEquatable<Nickname>
 
     private void Validate(string nickname)
     {
-        nickname = nickname.Trim();
-
         if(string.IsNullOrEmpty(nickname)) throw new ArgumentException("Nickname cannot be null or empty");
 
         if(nickname.Length < 2 || nickname.Length > 20) throw new ArgumentException("Nickname must contain between 2 and 20 characters");

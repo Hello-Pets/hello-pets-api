@@ -9,9 +9,9 @@ public class Specie : ValueObject, IEquatable<Specie>
     public string Breed { get; private set; } = null!;
 
     [JsonConstructor]
-    public Specie(int petSpecie, string breed = "")
+    public Specie(int petSpecie = 0, string breed = "Other")
     {
-        Validate(petSpecie, breed);
+        Validate(petSpecie, breed.Trim());
 
         PetSpecie = (SpecieEnum)petSpecie;
         Breed = breed.Trim();
@@ -21,8 +21,6 @@ public class Specie : ValueObject, IEquatable<Specie>
 
     private void Validate(int petSpecie, string breed)
     {
-        breed = breed.Trim();
-
         if(!Enum.IsDefined(typeof(SpecieEnum), petSpecie)) throw new ArgumentException("Invalid pet specie");
 
         if(breed.Length < 3 || breed.Length > 20) throw new ArgumentException("Breed must be between 3 and 20 characters");
