@@ -6,7 +6,7 @@ namespace Data.ValueObjects
     {
         public DateTime DateOfBirth { get; private set; } = DateTime.Today;
 
-        public Birthday() { }
+        private Birthday() { }
 
         public Birthday(DateTime date)
         {

@@ -4,14 +4,13 @@ namespace Data.ValueObjects
 {
     internal class Address : ValueObject, IEquatable<Address>
     {
-        //Duvida: Sera necessario pais?
-        //public string Country { get; private set; } = null!;
-        public string Street { get; private set; } = null!;
-        public string City { get; private set; } = null!;
-        public string State { get; private set; } = null!;
-        public string PostalCode { get; private set; } = null!;
+        public string Country { get; private set; } = string.Empty;
+        public string Street { get; private set; } = string.Empty;
+        public string City { get; private set; } = string.Empty;
+        public string State { get; private set; } = string.Empty;
+        public string PostalCode { get; private set; } = string.Empty;
         
-        public Address() { }
+        private Address() { }
 
         public Address (string street, string city, string state, string postalCode)
         {
