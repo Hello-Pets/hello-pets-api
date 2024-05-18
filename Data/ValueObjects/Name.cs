@@ -19,7 +19,6 @@ public class Name : ValueObject, IEquatable<Name>
 
     private Name() {}
 
-    //TODO: Lancar exceçoes personalizadas em vez de EXCEPTION
     public void Validate(string firstName, string lastName) 
     {
         firstName = firstName.Trim();
@@ -34,6 +33,8 @@ public class Name : ValueObject, IEquatable<Name>
         if(firstName.Any(ch => char.IsPunctuation(ch)) || lastName.Any(ch => char.IsPunctuation(ch))) throw new Exception("First name and last name cannot contain pontuaction");
 
         if(firstName.Any(ch => char.IsDigit(ch)) || lastName.Any(ch => char.IsDigit(ch))) throw new Exception("First name and last name cannot contain digit");
+
+        if (firstName.Any(ch => !char.IsLetter(ch)) || lastName.Any(ch => !char.IsLetter(ch))) throw new Exception("First name and last name cannot contain special characters");
     }
 
     public static implicit operator string(Name name) => name.ToString();
