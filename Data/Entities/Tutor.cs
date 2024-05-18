@@ -15,8 +15,8 @@ namespace Data.Entities
         //Conferir infos sobre foto
         public string TutorPhoto { get; private set; } = null!;
         public MiniBio TutorMiniBio { get; private set; } = null!;
-        //implementar lista pet
-        //Implementar Telefone
+        public PetList PetList { get; private set; } = null!;
+        public PhoneNumber PhoneNumber { get; private set; } = null!;
         
         private Tutor() { }
 
