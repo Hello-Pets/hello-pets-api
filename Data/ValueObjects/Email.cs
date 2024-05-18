@@ -7,11 +7,11 @@ namespace Data.ValueObjects
     internal class Email : ValueObject
     {
         public string Address { get; private set; } = null!;
-        public Verification Verification { get; set; } = new Verification();
+        public Verification Verification { get; private set; } = new Verification();
 
-        const string Pattern = @"\w+@\w+\.\w+";
+        const string Pattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
 
-        private static Regex EmailRegex = new Regex(Pattern);
+        private static readonly Regex EmailRegex = new Regex(Pattern);
 
         private Email() { }
 
@@ -21,15 +21,17 @@ namespace Data.ValueObjects
             Address = address;
         }
 
-        private static void Validate(string adress)
+        private static void Validate(string address)
         {
-            DomainExceptionValidation.When(string.IsNullOrEmpty(adress.Trim()), "Email cannot be empty");
-            DomainExceptionValidation.When(adress.Trim().Length < 5 || adress.Trim().Length > 100,
+            string trimmedAddress = address.Trim();
+
+            DomainExceptionValidation.When(string.IsNullOrEmpty(trimmedAddress), "Email cannot be empty");
+            DomainExceptionValidation.When(trimmedAddress.Length < 5 || trimmedAddress.Length > 100,
                 "Email must have between 5 and 100 characters");
-            DomainExceptionValidation.When(!EmailRegex.IsMatch(adress.Trim()), "Invalid email");
+            DomainExceptionValidation.When(!EmailRegex.IsMatch(trimmedAddress), "Invalid email");
         }
 
-        public static implicit operator Email(string adress) => new Email(adress);
+        public static implicit operator Email(string address) => new Email(address);
 
         public static implicit operator string(Email email) => email.ToString();
 
