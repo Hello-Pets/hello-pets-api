@@ -1,57 +1,60 @@
 ﻿using HelloPets.Data.ValueObjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data.ValueObjects
 {
     internal class Address : ValueObject, IEquatable<Address>
     {
         public string Country { get; private set; } = string.Empty;
-        public string Street { get; private set; } = string.Empty;
-        public string City { get; private set; } = string.Empty;
         public string State { get; private set; } = string.Empty;
+        public string City { get; private set; } = string.Empty;
+        public string Street { get; private set; } = string.Empty;
         public string PostalCode { get; private set; } = string.Empty;
         
         private Address() { }
 
-        public Address (string street, string city, string state, string postalCode)
+        public Address(string country, string state, string city, string street, string postalCode)
         {
-            Validate(street, city, state, postalCode);
+            Validate(country, state, city, street, postalCode);
 
-            Street = street;
-            City = city;
+            Country = country;
             State = state;
+            City = city;
+            Street = street;
             PostalCode = postalCode;
         }
 
-
-        //TODO: Melhorar validacao
-        public void Validate(string street, string city, string state, string postalCode)
+        public void Validate(string country, string state, string city, string street, string postalCode)
         {
-            street = street.Trim();
-            city = city.Trim();
+            country = country.Trim();
             state = state.Trim();
+            city = city.Trim();
+            street = street.Trim();
             postalCode = postalCode.Trim();
 
-            if (street is null || city is null || state is null || postalCode is null)
-                throw new NullReferenceException("Street cannot be empty");
+            if (country is null || state is null || city is null || street is null || postalCode is null)
+                throw new NullReferenceException("The address cannot be empty");
 
-            if (city.Length < 3 || city.Length > 20)
-                throw new ArgumentException("City must contain between 3 and 20 characters");
-            
-            if (state.Length < 3 || state.Length > 20)
-                throw new ArgumentException("Street must contain between 3 and 20 characters");
-
-            if (postalCode.Length < 3 || postalCode.Length > 20)
-                throw new ArgumentException("Postal Code must contain between 3 and 20 characters");
+            ValidateStringLength(country, 3, 20);
+            ValidateStringLength(state, 3, 20);
+            ValidateStringLength(city, 3, 20);
+            ValidateStringLength(street, 3, 20);
+            ValidateStringLength(postalCode, 3, 20);
 
 
         }
 
-        //Duvida: Precisa de ToString aqui?
-        //public override string ToString() => $"";
+        private void ValidateStringLength(string localName, int minLength, int maxLength)
+        {
+            if (localName.Length < minLength || localName.Length > maxLength)
+                throw new ArgumentException($"{localName} must contain between {minLength} and {maxLength} characters");
+        }
 
-        public override int GetHashCode() => (Street + City + State + PostalCode).GetHashCode();
+        public override string ToString() => $"{Country}, {State}, {City}, {Street}, {PostalCode}";
 
-        public bool Equals(Address? address) => Street == address?.Street && City == address.City &&
-            State == address.State && PostalCode == address.PostalCode;
+        public override int GetHashCode() => (Country + State + City + Street + PostalCode).GetHashCode();
+
+        public bool Equals(Address? address) => Country == address.Country && State == address.State &&
+            Street == address.Street && PostalCode == address.PostalCode;
     }
 }
