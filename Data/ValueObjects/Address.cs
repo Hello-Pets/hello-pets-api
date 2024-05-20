@@ -32,7 +32,8 @@ namespace Data.ValueObjects
             street = street.Trim();
             postalCode = postalCode.Trim();
 
-            if (country is null || state is null || city is null || street is null || postalCode is null)
+            if (country.Length == 0 || state.Length == 0 || city.Length == 0 || 
+                street.Length == 0 || postalCode.Length == 0)
                 throw new NullReferenceException("The address cannot be empty");
 
             ValidateStringLength(country, 3, 20);
