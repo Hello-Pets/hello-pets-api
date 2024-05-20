@@ -26,11 +26,11 @@ namespace Data.ValueObjects
                 throw new Exception("Only numbers are accepted");
 
 
-            if (countryCode is null) throw new NullReferenceException("The country phone code cannot be empty");
+            if (countryCode.Length == 0) throw new NullReferenceException("The country phone code cannot be empty");
 
-            if (localCode is null) throw new NullReferenceException("The local phone code cannot be empty");
+            if (localCode.Length == 0) throw new NullReferenceException("The local phone code cannot be empty");
 
-            if (number is null) throw new NullReferenceException("The Number cannot be empty");
+            if (number.Length == 0) throw new NullReferenceException("The Number cannot be empty");
 
             ValidateStringLength(countryCode, 1, 3);
             ValidateStringLength(localCode, 1, 3);
