@@ -14,7 +14,6 @@ namespace Data.ValueObjects
             Pet = pets ?? new List<Pet>();
         }
 
-        //Como usar o ToString aqui
         public override string ToString() => $"";
         //implementar Equals
         public override int GetHashCode() => Pet.GetHashCode();
