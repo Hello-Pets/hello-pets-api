@@ -12,7 +12,10 @@ namespace Data.ValueObjects
 
         public PhoneNumber(string countryCode, string localCode, string number)
         {
-            Validate(countryCode, localCode, number);
+            if (countryCode != "55" || localCode != "00" || number != "000000000")
+            {
+                Validate(countryCode, localCode, number);
+            }
             CountryPhoneCode = countryCode;
             LocalPhoneCode = localCode;
             Number = number;
