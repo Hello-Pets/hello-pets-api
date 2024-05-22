@@ -5,8 +5,8 @@ namespace Data.ValueObjects
     internal class PhoneNumber : ValueObject
     {
         public string CountryPhoneCode { get; private set; } = "55";
-        public string LocalPhoneCode { get; private set; } = null!;
-        public string Number { get; private set; } = null!;
+        public string LocalPhoneCode { get; private set; } = "00";
+        public string Number { get; private set; } = "000000000";
 
         private PhoneNumber() { }
 
@@ -24,13 +24,6 @@ namespace Data.ValueObjects
                 || localCode.Any(n => !char.IsDigit(n)) 
                 || number.Any(n => !char.IsDigit(n))) 
                 throw new Exception("Only numbers are accepted");
-
-
-            if (countryCode.Length == 0) throw new NullReferenceException("The country phone code cannot be empty");
-
-            if (localCode.Length == 0) throw new NullReferenceException("The local phone code cannot be empty");
-
-            if (number.Length == 0) throw new NullReferenceException("The Number cannot be empty");
 
             ValidateStringLength(countryCode, 1, 3);
             ValidateStringLength(localCode, 1, 3);
