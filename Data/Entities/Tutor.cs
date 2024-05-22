@@ -14,7 +14,7 @@ namespace Data.Entities
         public Address Address { get; private set; } = null!;
         public string TutorPhoto { get; private set; } = null!;
         public MiniBio TutorMiniBio { get; private set; } = null!;
-        public PetList PetList { get; private set; } = null!;
+        public List<Pet> Pets { get; private set; }
         public PhoneNumber PhoneNumber { get; private set; } = null!;
         
         private Tutor() { }
@@ -30,7 +30,6 @@ namespace Data.Entities
             Address = new Address(country, state, city, street, postalCode);
             TutorPhoto = tutorPhoto;
             TutorMiniBio = new MiniBio(tutorMiniBio);
-            //PetList = petList;
             PhoneNumber = new PhoneNumber(countryCode, localCode, number);
 
         }
