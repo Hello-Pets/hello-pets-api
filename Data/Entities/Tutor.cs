@@ -10,7 +10,7 @@ namespace Data.Entities
         public Name Name { get; private set; } = null!;
         public Email Email { get; private set; } = null!;
         public Document Document { get; private set; } = null!;
-        public DateTime TutorBirthDate { get; private set; }
+        public DateTime BirthDate { get; private set; }
         public Address Address { get; private set; } = null!;
         public string TutorPhoto { get; private set; } = null!;
         public MiniBio TutorMiniBio { get; private set; } = null!;
@@ -26,7 +26,7 @@ namespace Data.Entities
             Name = new Name(firtName, lastName);
             Email = new Email(email);
             Document = new Document(documentTypeEnum, documentNumber);
-            TutorBirthDate = new DateTime(tutorBirthDate.Year, tutorBirthDate.Month, tutorBirthDate.Day);
+            BirthDate = new DateTime(tutorBirthDate.Year, tutorBirthDate.Month, tutorBirthDate.Day);
             Address = new Address(country, state, city, street, postalCode);
             TutorPhoto = tutorPhoto;
             TutorMiniBio = new MiniBio(tutorMiniBio);
