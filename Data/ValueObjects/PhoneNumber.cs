@@ -4,18 +4,16 @@ namespace Data.ValueObjects
 {
     internal class PhoneNumber : ValueObject
     {
-        public string CountryPhoneCode { get; private set; } = "55";
-        public string LocalPhoneCode { get; private set; } = "00";
-        public string Number { get; private set; } = "000000000";
+        public string CountryPhoneCode { get; private set; }
+        public string LocalPhoneCode { get; private set; }
+        public string Number { get; private set; }
 
         private PhoneNumber() { }
 
-        public PhoneNumber(string countryCode, string localCode, string number)
+        public PhoneNumber(string countryCode = "55", string localCode = "00", string number = "000000000")
         {
-            if (countryCode != "55" || localCode != "00" || number != "000000000")
-            {
-                Validate(countryCode, localCode, number);
-            }
+            Validate(countryCode, localCode, number);
+
             CountryPhoneCode = countryCode;
             LocalPhoneCode = localCode;
             Number = number;
