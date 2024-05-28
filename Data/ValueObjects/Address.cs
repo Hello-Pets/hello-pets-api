@@ -10,7 +10,7 @@ namespace Data.ValueObjects
         public string City { get; private set; } = string.Empty;
         public string Street { get; private set; } = string.Empty;
         public string PostalCode { get; private set; } = string.Empty;
-        
+
         private Address() { }
 
         public Address(string country, string state, string city, string street, string postalCode)
@@ -32,15 +32,15 @@ namespace Data.ValueObjects
             street = street.Trim();
             postalCode = postalCode.Trim();
 
-            if (country is null || state is null || city is null || street is null || postalCode is null)
-                throw new NullReferenceException("The address cannot be empty");
-
-            ValidateStringLength(country, 3, 20);
-            ValidateStringLength(state, 3, 20);
-            ValidateStringLength(city, 3, 20);
-            ValidateStringLength(street, 3, 20);
-            ValidateStringLength(postalCode, 3, 20);
-
+            if (country.Length != 0 || state.Length != 0 || city.Length != 0 ||
+                street.Length != 0 || postalCode.Length != 0)
+            {
+                ValidateStringLength(country, 3, 20);
+                ValidateStringLength(state, 3, 20);
+                ValidateStringLength(city, 3, 20);
+                ValidateStringLength(street, 3, 20);
+                ValidateStringLength(postalCode, 3, 20);
+            }
 
         }
 

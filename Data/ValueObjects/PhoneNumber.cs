@@ -4,35 +4,31 @@ namespace Data.ValueObjects
 {
     internal class PhoneNumber : ValueObject
     {
-        public int CountryPhoneCode { get; private set; } = 55;
-        public int LocalPhoneCode { get; private set; }
-        public int Number { get; private set; }
+        public string CountryPhoneCode { get; private set; }
+        public string LocalPhoneCode { get; private set; }
+        public string Number { get; private set; }
 
         private PhoneNumber() { }
 
-        public PhoneNumber(int countryCode, int localCode, int number)
+        public PhoneNumber(string countryCode = "55", string localCode = "00", string number = "000000000")
         {
             Validate(countryCode, localCode, number);
+
             CountryPhoneCode = countryCode;
             LocalPhoneCode = localCode;
             Number = number;
         }
 
-        public void Validate(int countryCode, int localCode, int number)
+        public void Validate(string countryCode, string localCode, string number)
         {
-            string stringCountryCode = Convert.ToString(countryCode);
-            string stringLocalCode = Convert.ToString(localCode);
-            string stringNumber = Convert.ToString(number);
+            if (countryCode.Any(n => !char.IsDigit(n)) 
+                || localCode.Any(n => !char.IsDigit(n)) 
+                || number.Any(n => !char.IsDigit(n))) 
+                throw new Exception("Only numbers are accepted");
 
-            if (stringCountryCode is null) throw new NullReferenceException("The country phone code cannot be empty");
-
-            if (stringLocalCode is null) throw new NullReferenceException("The local phone code cannot be empty");
-
-            if (stringNumber is null) throw new NullReferenceException("The Number cannot be empty");
-
-            ValidateStringLength(stringCountryCode, 1, 3);
-            ValidateStringLength(stringLocalCode, 1, 3);
-            ValidateStringLength(stringNumber, 7, 10);
+            ValidateStringLength(countryCode, 1, 3);
+            ValidateStringLength(localCode, 1, 3);
+            ValidateStringLength(number, 7, 10);
         }
         private void ValidateStringLength(string numberToValidate, int minLength, int maxLength)
         {
