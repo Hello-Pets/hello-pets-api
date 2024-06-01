@@ -4,7 +4,7 @@ using HelloPets.Data.ValueObjects;
 
 namespace Data.Entities
 {
-    internal class Tutor : Entity
+    public class Tutor : Entity
     {
         public Name Name { get; private set; } = null!;
         public Email Email { get; private set; } = null!;

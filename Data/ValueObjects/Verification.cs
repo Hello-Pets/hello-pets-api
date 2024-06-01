@@ -3,7 +3,7 @@ using HelloPets.Data.ValueObjects;
 
 namespace Data.ValueObjects
 {
-    internal class Verification : ValueObject
+    public class Verification : ValueObject
     {
         public string Code { get; private set; } = Guid.NewGuid().ToString("N")[0..6];
         public DateTime? ExpireAt { get; private set; } = DateTime.UtcNow.AddMinutes(5);

@@ -2,7 +2,7 @@
 
 namespace Data.ValueObjects
 {
-    internal class PhoneNumber : ValueObject
+    public class PhoneNumber : ValueObject
     {
         public string CountryPhoneCode { get; private set; }
         public string LocalPhoneCode { get; private set; }

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Data.ValueObjects
 {
-    internal class Email : ValueObject
+    public class Email : ValueObject
     {
         public string Address { get; private set; } = null!;
         public Verification Verification { get; private set; } = new Verification();
