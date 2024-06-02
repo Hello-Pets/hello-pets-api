@@ -8,32 +8,33 @@ namespace Data.Entities
     {
         public Name Name { get; private set; } = null!;
         public Email Email { get; private set; } = null!;
+        public Password Password { get; private set; } = null!;
         public Document Document { get; private set; } = null!;
         public DateTime BirthDate { get; private set; }
         public Address Address { get; private set; } = null!;
         public string TutorPhoto { get; private set; } = null!;
         public MiniBio TutorMiniBio { get; private set; } = null!;
-        public List<Pet> Pets { get; private set; }
+        public List<Pet> Pets { get; private set; } = new List<Pet>();
         public PhoneNumber PhoneNumber { get; private set; } = null!;
         
         private Tutor() { }
 
-        public Tutor(string firtName, string lastName, string email, int documentTypeEnum, string documentNumber, DateTime BirthDate, string country, string state, string city, string street, string postalCode, string tutorPhoto, string tutorMiniBio, List<Pet> petList , string countryCode, string localCode, string number)
+        public Tutor(string firtName, string lastName, string email, string password, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorPhoto, string tutorMiniBio, List<Pet> petList , string countryCode, string localCode, string number)
         {
-            Validate(firtName, lastName, email, documentTypeEnum, documentNumber, BirthDate, country, state, city, street, postalCode, tutorMiniBio, petList, countryCode, localCode, number);
+            Validate(firtName, lastName, email, password, documentTypeEnum, documentNumber, BirthDate, country, state, city, street, postalCode, tutorMiniBio, petList, countryCode, localCode, number);
 
             Name = new Name(firtName, lastName);
             Email = new Email(email);
+            Password = new Password(password);
             Document = new Document(documentTypeEnum, documentNumber);
-            BirthDate = new DateTime(BirthDate.Year, BirthDate.Month, BirthDate.Day);
+            BirthDate = new DateTime(birthDate.Year, birthDate.Month, birthDate.Day);
             Address = new Address(country, state, city, street, postalCode);
             TutorPhoto = tutorPhoto;
             TutorMiniBio = new MiniBio(tutorMiniBio);
             PhoneNumber = new PhoneNumber(countryCode, localCode, number);
-            Pets = new List<Pet>();
         }
 
-        public void Validate(string firtName, string lastName, string email, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorMiniBio, List<Pet> petList, string countryCode, string localCode, string number)
+        public void Validate(string firtName, string lastName, string email, string password, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorMiniBio, List<Pet> petList, string countryCode, string localCode, string number)
         {
             _ = new Name(firtName, lastName);
             _ = new Email(email);
@@ -42,6 +43,7 @@ namespace Data.Entities
             _ = new Address(country, state, city, street, postalCode);
             _ = new MiniBio(tutorMiniBio);
             _ = new PhoneNumber(countryCode, localCode, number);
+            _ = new Password(password);
         }
     }
 }
