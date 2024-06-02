@@ -1,6 +1,7 @@
 using Data.Entities;
 using HelloPets.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using HelloPets.Data.EntitiesConfiguration;
 
 namespace HelloPets.Data.Context;
 
@@ -12,5 +13,11 @@ public class ApplicationContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseInMemoryDatabase(databaseName: "BancoDeDadosEmMemoria");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new TutorConfiguration());
+        modelBuilder.ApplyConfiguration(new PetConfiguration());
     }
 }
