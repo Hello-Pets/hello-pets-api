@@ -2,15 +2,15 @@
 
 namespace Data.ValueObjects
 {
-    public class PhoneNumber : ValueObject
+    public class Phone : ValueObject
     {
-        public string CountryPhoneCode { get; private set; }
-        public string LocalPhoneCode { get; private set; }
-        public string Number { get; private set; }
+        public string CountryPhoneCode { get; private set; } = null!;
+        public string LocalPhoneCode { get; private set; } = null!;
+        public string Number { get; private set; } = null!;
 
-        private PhoneNumber() { }
+        private Phone() { }
 
-        public PhoneNumber(string countryCode = "55", string localCode = "00", string number = "000000000")
+        public Phone(string countryCode = "", string localCode = "", string number = "")
         {
             Validate(countryCode, localCode, number);
 
@@ -40,7 +40,7 @@ namespace Data.ValueObjects
 
         public override int GetHashCode() => (CountryPhoneCode + LocalPhoneCode + Number).GetHashCode();
 
-        public bool Equals(PhoneNumber? other) => CountryPhoneCode == other?.CountryPhoneCode
+        public bool Equals(Phone? other) => CountryPhoneCode == other?.CountryPhoneCode
             && LocalPhoneCode == other.LocalPhoneCode && Number == other.Number;
     }
 }

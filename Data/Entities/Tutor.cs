@@ -12,10 +12,10 @@ namespace Data.Entities
         public Document Document { get; private set; } = null!;
         public DateTime BirthDate { get; private set; }
         public Address Address { get; private set; } = null!;
-        public string TutorPhoto { get; private set; } = null!;
-        public MiniBio TutorMiniBio { get; private set; } = null!;
+        public string Photo { get; private set; } = null!;
+        public MiniBio MiniBio { get; private set; } = null!;
         public List<Pet> Pets { get; private set; } = new List<Pet>();
-        public PhoneNumber PhoneNumber { get; private set; } = null!;
+        public Phone Phone { get; private set; } = null!;
         
         private Tutor() { }
 
@@ -29,9 +29,9 @@ namespace Data.Entities
             Document = new Document(documentTypeEnum, documentNumber);
             BirthDate = new DateTime(birthDate.Year, birthDate.Month, birthDate.Day);
             Address = new Address(country, state, city, street, postalCode);
-            TutorPhoto = tutorPhoto;
-            TutorMiniBio = new MiniBio(tutorMiniBio);
-            PhoneNumber = new PhoneNumber(countryCode, localCode, number);
+            Photo = tutorPhoto;
+            MiniBio = new MiniBio(tutorMiniBio);
+            Phone = new Phone(countryCode, localCode, number);
         }
 
         public void Validate(string firtName, string lastName, string email, string password, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorMiniBio, List<Pet> petList, string countryCode, string localCode, string number)
@@ -42,7 +42,7 @@ namespace Data.Entities
             if (birthDate < new DateTime(1905, 03, 10)) throw new ArgumentException("Birthdate cannot be inferior than Deolira Gliceira (search for 'Older woman alive')");
             _ = new Address(country, state, city, street, postalCode);
             _ = new MiniBio(tutorMiniBio);
-            _ = new PhoneNumber(countryCode, localCode, number);
+            _ = new Phone(countryCode, localCode, number);
             _ = new Password(password);
         }
     }
