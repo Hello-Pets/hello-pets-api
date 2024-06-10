@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Data.ValueObjects
 {
-    internal class Address : ValueObject, IEquatable<Address>
+    public class Address : ValueObject, IEquatable<Address>
     {
         public string Country { get; private set; } = string.Empty;
         public string State { get; private set; } = string.Empty;
