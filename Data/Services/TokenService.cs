@@ -11,32 +11,21 @@ namespace Data.Services
     {
         public static string Generate(Tutor tutor)
         {
+            var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(PrivateKey.Key);
-
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(tutor),
-                SigningCredentials = credentials,
+                Subject = new ClaimsIdentity(new[] { new Claim("id", tutor.Id.ToString()) }),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature),
                 Expires = DateTime.UtcNow.AddHours(12)
             };
 
-            var handler = new JwtSecurityTokenHandler();
 
-            var token = handler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var tokenString = handler.WriteToken(token);
-
-            return tokenString;
-        }
-        private static ClaimsIdentity GenerateClaims(Tutor tutor)
-        {
-            var claimIdentity = new ClaimsIdentity();
-            claimIdentity.AddClaim(new Claim("tutor", tutor.Email));
-
-            return claimIdentity;
+            return tokenHandler.WriteToken(token);
         }
     }
 }
