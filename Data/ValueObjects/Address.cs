@@ -5,11 +5,11 @@ namespace Data.ValueObjects
 {
     public class Address : ValueObject, IEquatable<Address>
     {
-        public string? Country { get; private set; }
-        public string? State { get; private set; }
-        public string? City { get; private set; }
-        public string? Street { get; private set; }
-        public string? PostalCode { get; private set; }
+        public string Country { get; private set; }
+        public string State { get; private set; }
+        public string City { get; private set; }
+        public string Street { get; private set; }
+        public string PostalCode { get; private set; }
 
         public static Address Empty => new Address(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
 
