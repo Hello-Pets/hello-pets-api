@@ -5,42 +5,47 @@ namespace Data.ValueObjects
 {
     public class Address : ValueObject, IEquatable<Address>
     {
-        public string Country { get; private set; } = string.Empty;
-        public string State { get; private set; } = string.Empty;
-        public string City { get; private set; } = string.Empty;
-        public string Street { get; private set; } = string.Empty;
-        public string PostalCode { get; private set; } = string.Empty;
+        public string? Country { get; private set; }
+        public string? State { get; private set; }
+        public string? City { get; private set; }
+        public string? Street { get; private set; }
+        public string? PostalCode { get; private set; }
 
-        private Address() { }
+        public static Address Empty => new Address(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+
+        private Address()
+        {
+            Country = string.Empty;
+            State = string.Empty;
+            City = string.Empty;
+            Street = string.Empty;
+            PostalCode = string.Empty;
+        }
 
         public Address(string country, string state, string city, string street, string postalCode)
         {
             Validate(country, state, city, street, postalCode);
 
-            Country = country;
-            State = state;
-            City = city;
-            Street = street;
-            PostalCode = postalCode;
+            Country = country ?? string.Empty;
+            State = state ?? string.Empty;
+            City = city ?? string.Empty;
+            Street = street ?? string.Empty;
+            PostalCode = postalCode ?? string.Empty;
         }
 
-        public void Validate(string country, string state, string city, string street, string postalCode)
+        public void Validate(string? country, string? state, string? city, string? street, string? postalCode)
         {
-            country = country.Trim();
-            state = state.Trim();
-            city = city.Trim();
-            street = street.Trim();
-            postalCode = postalCode.Trim();
+            if (country != null) country = country.Trim();
+            if (state != null) state = state.Trim();
+            if (city != null) city = city.Trim();
+            if (street != null) street = street.Trim();
+            if (postalCode != null) postalCode = postalCode.Trim();
 
-            if (country.Length != 0 || state.Length != 0 || city.Length != 0 ||
-                street.Length != 0 || postalCode.Length != 0)
-            {
-                ValidateStringLength(country, 3, 20);
-                ValidateStringLength(state, 3, 20);
-                ValidateStringLength(city, 3, 20);
-                ValidateStringLength(street, 3, 20);
-                ValidateStringLength(postalCode, 3, 20);
-            }
+            if (!string.IsNullOrEmpty(country)) ValidateStringLength(country, 3, 20);
+            if (!string.IsNullOrEmpty(state)) ValidateStringLength(state, 3, 20);
+            if (!string.IsNullOrEmpty(city)) ValidateStringLength(city, 3, 20);
+            if (!string.IsNullOrEmpty(street)) ValidateStringLength(street, 3, 20);
+            if (!string.IsNullOrEmpty(postalCode)) ValidateStringLength(postalCode, 3, 20);
 
         }
 
@@ -54,7 +59,15 @@ namespace Data.ValueObjects
 
         public override int GetHashCode() => (Country + State + City + Street + PostalCode).GetHashCode();
 
-        public bool Equals(Address? address) => Country == address.Country && State == address.State &&
-            Street == address.Street && PostalCode == address.PostalCode;
+        public bool Equals(Address? address)
+        {
+            if (address is null) return false;
+
+            return Country == address.Country &&
+                State == address.State &&
+                City == address.City &&
+                Street == address.Street &&
+                PostalCode == address.PostalCode;
+        }
     }
 }
