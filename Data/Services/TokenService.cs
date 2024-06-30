@@ -2,17 +2,28 @@
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Data.JwtBearerConfiguration;
 using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace Data.Services
 {
     public class TokenService
     {
-        public static string Generate(Tutor tutor)
+        private readonly IConfiguration _configuration;
+
+        public TokenService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public string Generate(Tutor tutor)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(PrivateKey.Key);
+
+            var jwtSection = _configuration.GetSection("JwtSection");
+            var secretKey = CheckJwtSetting(jwtSection, "SecretKey");
+
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -45,6 +56,15 @@ namespace Data.Services
                 //Cria um Id unico para o token dando maior seguranca
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             ];
+        }
+
+        private string CheckJwtSetting(IConfigurationSection jwtSection, string key)
+        {
+            var value = jwtSection.GetValue<string>(key);
+            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException
+                    (key, $"{key} configuration is missing in JwtSettings.");
+
+            return value;
         }
     }
 }
