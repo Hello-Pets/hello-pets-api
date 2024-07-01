@@ -8,7 +8,7 @@ namespace Data.ValueObjects
         public string Code { get; private set; } = Guid.NewGuid().ToString("N")[0..6];
         public DateTime? ExpireAt { get; private set; } = DateTime.UtcNow.AddMinutes(5);
         public DateTime? VerifiedAt { get; private set; }
-        public bool IsActive => VerifiedAt == null && ExpireAt > DateTime.UtcNow;
+        public bool IsActive => VerifiedAt != null && ExpireAt == null;
 
         public Verification() { }
 

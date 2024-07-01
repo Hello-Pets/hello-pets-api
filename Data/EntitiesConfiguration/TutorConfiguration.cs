@@ -18,9 +18,9 @@ public class TutorConfiguration : IEntityTypeConfiguration<Tutor>
 
         builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Property(x => x.Code).HasColumnName("EmailVerificationCode").IsRequired();
 
-        builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Property(x => x.ExpireAt).HasColumnName("EmailVerificationExpiresAt").IsRequired();
+        builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Property(x => x.ExpireAt).HasColumnName("EmailVerificationExpiresAt").IsRequired(false);
 
-        builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Property(x => x.VerifiedAt).HasColumnName("EmailVerificationVerifiedAt").IsRequired();
+        builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Property(x => x.VerifiedAt).HasColumnName("EmailVerificationVerifiedAt").IsRequired(false);
 
         builder.OwnsOne(x => x.Email).OwnsOne(x => x.Verification).Ignore(x => x.IsActive);
 
