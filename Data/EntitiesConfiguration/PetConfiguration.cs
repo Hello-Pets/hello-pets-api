@@ -12,7 +12,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.OwnsOne(x => x.Nickname).Property(x => x.Name).HasColumnType("NVARCHAR").HasMaxLength(99).HasColumnName("FirstName").IsRequired();
 
-        builder.Property(x => x.Photo).HasColumnName("ProfilePicture").HasMaxLength(255).IsRequired();
+        builder.Property(x => x.Photo).HasColumnName("ProfilePicture").HasMaxLength(255).IsRequired(false);
 
         builder.OwnsOne(x => x.Document).Property(x => x.Type).HasColumnName("DocumentType").IsRequired();
 
