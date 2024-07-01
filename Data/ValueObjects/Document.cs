@@ -6,7 +6,7 @@ namespace HelloPets.Data.ValueObjects;
 public class Document : ValueObject, IEquatable<Document>
 {
     public string Number { get; private set; } = null!;
-    public DocumentTypeEnum Type { get; private set; }
+    public DocumentTypeEnum? Type { get; private set; }
 
     [JsonConstructor]
     public Document(int type = 0, string number = "")
