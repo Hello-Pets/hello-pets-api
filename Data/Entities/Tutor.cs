@@ -15,7 +15,7 @@ namespace Data.Entities
         public Address Address { get; private set; } = null!;
         public string Photo { get; private set; } = null!;
         public MiniBio MiniBio { get; private set; } = null!;
-        public List<Pet> Pets { get; private set; } = new List<Pet>();
+        public virtual List<Pet> Pets { get; private set; } = new List<Pet>();
         public Phone Phone { get; private set; } = null!;
         public bool IsActive { get; private set; } = false;
         

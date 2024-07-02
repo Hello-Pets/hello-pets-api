@@ -8,7 +8,7 @@ public class Pet : Entity
 {
     public Nickname Nickname { get; private set; } = null!;
     public string TutorId { get; private set; } = null!;
-    public Tutor Tutor { get; private set; } = null!;
+    public virtual Tutor Tutor { get; private set; } = null!;
     public string Photo { get; private set; } = null!;
     public Document Document { get; private set; } = null!;
     public DateTime BirthDate { get; private set; }
