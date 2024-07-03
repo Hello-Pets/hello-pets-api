@@ -48,11 +48,13 @@ namespace Data.Services
             return
             [
                 new Claim("id", tutor.Id.ToString()),
-                new Claim("nome", tutor.Name),
-                new Claim("email", tutor.Email),
+                new Claim(JwtRegisteredClaimNames.Name, tutor.Name),
+                new Claim(JwtRegisteredClaimNames.Email, tutor.Email),
+
                 //Insere a data de criacao do token ao token
                 new Claim(JwtRegisteredClaimNames.Iat,
                     DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+
                 //Cria um Id unico para o token dando maior seguranca
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             ];
