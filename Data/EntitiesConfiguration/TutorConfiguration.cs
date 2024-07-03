@@ -30,7 +30,7 @@ public class TutorConfiguration : IEntityTypeConfiguration<Tutor>
 
         builder.OwnsOne(x => x.Document).Property(x => x.Number).HasColumnName("DocumentNumber").IsRequired();
 
-        builder.Property(x => x.BirthDate).HasColumnName("BirthDate").IsRequired();
+        builder.Property(x => x.BirthDate).HasColumnName("BirthDate").IsRequired(false);
 
         builder.OwnsOne(x => x.Address).Property(x => x.Country).HasColumnName("Contry").IsRequired();
 
