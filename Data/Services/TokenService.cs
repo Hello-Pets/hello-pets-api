@@ -21,7 +21,7 @@ namespace Data.Services
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var jwtSection = _configuration.GetSection("JwtSection");
-            var secretKey = CheckJwtSetting(jwtSection, "SecretKey");
+            var secretKey = CheckJwtSettings(jwtSection, "SecretKey");
 
             var key = Encoding.ASCII.GetBytes(secretKey);
 
@@ -58,11 +58,10 @@ namespace Data.Services
             ];
         }
 
-        private string CheckJwtSetting(IConfigurationSection jwtSection, string key)
+        private string CheckJwtSettings(IConfigurationSection jwtSection, string key)
         {
             var value = jwtSection.GetValue<string>(key);
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException
-                    (key, $"{key} configuration is missing in JwtSettings.");
+            ArgumentNullException.ThrowIfNull(value, $"{key} configuration is missing in JwtSettings.");
 
             return value;
         }
