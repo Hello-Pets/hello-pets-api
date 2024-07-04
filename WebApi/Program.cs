@@ -29,6 +29,11 @@ builder.Services.AddAuthentication(x =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
+        ValidateLifetime = true,
+        LifetimeValidator = (before, expires, token, param) =>
+        {
+            return expires > DateTime.UtcNow;
+        }
     };
 });
 
