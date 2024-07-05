@@ -10,10 +10,12 @@ public class ApplicationContext : DbContext
     public DbSet<Tutor> Tutors { get; set; } = null!;
     public DbSet<Pet> Pets { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
-        optionsBuilder.UseInMemoryDatabase(databaseName: "BancoDeDadosEmMemoria");
+        
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => base.OnConfiguring(optionsBuilder);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

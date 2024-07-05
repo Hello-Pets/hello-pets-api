@@ -2,6 +2,7 @@ namespace HelloPets.Data.Enums;
 
 public enum PersonalitiesEnum
 {
+    Other,
     Affectionate,
     Playful,
     Independent,
@@ -11,11 +12,10 @@ public enum PersonalitiesEnum
     Curious,
     Intelligent,
     Shy,
-    Aggressive,
-    Calm ,
+    Aggressive ,
+    Calm,
     Stubborn,
     Friendly,
     Adventurous,
-    Lazy,
-    Other
+    Lazy
 }

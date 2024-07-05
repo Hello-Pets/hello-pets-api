@@ -7,8 +7,8 @@ namespace HelloPets.Data.Entities;
 public class Pet : Entity
 {
     public Nickname Nickname { get; private set; } = null!;
-    public int TutorId { get; private set; }
-    public Tutor Tutor { get; private set; } = null!;
+    public string TutorId { get; private set; } = null!;
+    public virtual Tutor Tutor { get; private set; } = null!;
     public string Photo { get; private set; } = null!;
     public Document Document { get; private set; } = null!;
     public DateTime BirthDate { get; private set; }
@@ -24,7 +24,7 @@ public class Pet : Entity
 
     private Pet() {}
 
-    public Pet(string nickname, int tutorId, string photo, int documentTypeEnum, string documentNumber, DateTime birthDate, List<string> preferences, List<string> dislikes, int petSpecieEnum, string petBreed, string miniBio, int petsCoatsEnum, decimal height, decimal lenght, decimal weight, int personality, bool neutered = false, bool hasMicrochip = false, bool specialNeeds = false)
+    public Pet(string nickname, string tutorId, string photo, int documentTypeEnum, string documentNumber, DateTime birthDate, List<string> preferences, List<string> dislikes, int petSpecieEnum, string petBreed, string miniBio, int petsCoatsEnum, decimal height, decimal lenght, decimal weight, int personality, bool neutered = false, bool hasMicrochip = false, bool specialNeeds = false)
     {
         Validate(nickname, photo, documentTypeEnum, documentNumber, birthDate, preferences, dislikes, petSpecieEnum, petBreed, miniBio, petsCoatsEnum, height, lenght, weight);
 
