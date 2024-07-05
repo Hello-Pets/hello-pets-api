@@ -2,7 +2,7 @@ namespace HelloPets.Data.Enums;
 
 public enum PetsCoatsEnum
 {
-    Other = 0,
+    Other,
     Black,
     Brown,
     White,

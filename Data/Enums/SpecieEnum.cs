@@ -2,7 +2,7 @@ namespace HelloPets.Data.Enums;
 
 public enum SpecieEnum
 {
-    Other = 0,
+    Other,
     Dog,
     Cat,
     Bird

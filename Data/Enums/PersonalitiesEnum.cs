@@ -2,7 +2,7 @@ namespace HelloPets.Data.Enums;
 
 public enum PersonalitiesEnum
 {
-    Other = 0,
+    Other,
     Affectionate,
     Playful,
     Independent,
