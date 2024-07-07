@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using HelloPets.Application.Services.Interfaces;
 
 namespace HelloPets.Data.ValueObjects;
 
@@ -10,10 +9,10 @@ public class Password : ValueObject, IEquatable<Password>
 
     private Password() {}
 
-    public Password(string password, IPasswordService passwordService)
+    public Password(string password)
     {
         Salt = RandomNumberGenerator.GetBytes(16);
-        Hash = passwordService.CreateHash(password);
+        //Hash = passwordService.CreateHash(password);
     }
 
     public static implicit operator string(Password password) => password.ToString();
