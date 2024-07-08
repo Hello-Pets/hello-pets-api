@@ -14,6 +14,21 @@ public abstract class Entity
     public DateTime Birthdate { get; private set; }
     public int ProfileImageId { get; private set; }
 
+    protected Entity(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, int profileImageId)
+    {
+        Id = id;
+        Name = name;
+        Document = document;
+        DocumentType = documentType;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        IsActive = isActive;
+        PublicId = publicId;
+        Bio = bio;
+        Birthdate = birthdate;
+        ProfileImageId = profileImageId;
+    }
+
     protected Entity() => PublicId = Guid.NewGuid();
 
     public bool Equals(int id) => Id == id;
