@@ -1,6 +1,8 @@
-﻿namespace Data.Entities
+﻿using HelloPets.Data.Entities;
+
+namespace Data.Entities
 {
-    public class TutorRefatorado
+    public class TutorRefatorado : Entity
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -22,7 +24,7 @@
 
         private TutorRefatorado() { }
 
-        public TutorRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType)
+        public TutorRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
