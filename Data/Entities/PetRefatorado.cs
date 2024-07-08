@@ -27,11 +27,11 @@ namespace Data.Entities
         public virtual List<TutorRefatorado> Tutors { get; private set; }
         public virtual List<Trait> Traits { get; private set; }
         public virtual List<Preference> Preferences { get; private set; }
-        public virtual List<SprecialNeeds> SprecialNeeds { get; private set; }
+        public virtual List<SpecialNeeds> SpecialNeeds { get; private set; }
 
         private PetRefatorado() { }
 
-        public PetRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime? birthdate, bool neutered, bool hasMicroChip, int profileImageId, string size, int bredddId, Breed breed, List<TutorRefatorado> tutors, List<Trait> traits, List<Preference> preferences, List<SprecialNeeds> sprecialNeeds) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
+        public PetRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, string size, int bredddId, Breed breed, List<TutorRefatorado> tutors, List<Trait> traits, List<Preference> preferences, List<SpecialNeeds> sprecialNeeds) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
@@ -54,7 +54,7 @@ namespace Data.Entities
             Tutors = tutors;
             Traits = traits;
             Preferences = preferences;
-            SprecialNeeds = sprecialNeeds;
+            SpecialNeeds = sprecialNeeds;
         }
     }
 }
