@@ -25,7 +25,7 @@ namespace Data.Entities
 
         private TutorRefatorado() { }
 
-        public TutorRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
+        public TutorRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<PetRefatorado> pets) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
@@ -44,6 +44,7 @@ namespace Data.Entities
             Address = address;
             ProfileImageId = profileImageId;
             UserType = userType;
+            Pets = pets;
         }
     }
 }
