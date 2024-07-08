@@ -1,4 +1,5 @@
-﻿using HelloPets.Data.Entities;
+﻿using Data.ValueObjects;
+using HelloPets.Data.Entities;
 using System;
 
 namespace Data.Entities
