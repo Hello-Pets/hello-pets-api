@@ -21,6 +21,7 @@ namespace Data.Entities
         public string Address { get; private set; }
         public int ProfileImageId { get; private set; }
         public string UserType { get; private set; }
+        public virtual List<PetRefatorado  > Pets { get; private set; }
 
         private TutorRefatorado() { }
 
