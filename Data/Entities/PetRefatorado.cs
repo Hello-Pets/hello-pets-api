@@ -3,7 +3,7 @@ using System;
 
 namespace Data.Entities
 {
-    internal class PetRefatorado : Entity
+    public class PetRefatorado : Entity
     {
         public int Id { get; private set; }
         public string Name { get; private set; }

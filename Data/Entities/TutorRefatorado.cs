@@ -1,6 +1,6 @@
 ﻿namespace Data.Entities
 {
-    internal class TutorRefatorado
+    public class TutorRefatorado
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
