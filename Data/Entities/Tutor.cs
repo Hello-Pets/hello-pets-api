@@ -2,7 +2,7 @@
 
 namespace Data.Entities
 {
-    public class TutorRefatorado : Entity
+    public class Tutor : Entity
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -21,11 +21,11 @@ namespace Data.Entities
         public string Address { get; private set; }
         public int ProfileImageId { get; private set; }
         public string UserType { get; private set; }
-        public virtual List<PetRefatorado  > Pets { get; private set; }
+        public virtual List<Pet  > Pets { get; private set; }
 
-        private TutorRefatorado() { }
+        private Tutor() { }
 
-        public TutorRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<PetRefatorado> pets) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
+        public Tutor(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<Pet> pets) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;

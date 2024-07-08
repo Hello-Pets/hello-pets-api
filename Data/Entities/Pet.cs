@@ -4,7 +4,7 @@ using System;
 
 namespace Data.Entities
 {
-    public class PetRefatorado : Entity
+    public class Pet : Entity
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -24,14 +24,14 @@ namespace Data.Entities
         public string Size { get; private set; }
         public int BredddId { get; private set; }
         public Breed Breed { get; private set; }
-        public virtual List<TutorRefatorado> Tutors { get; private set; }
+        public virtual List<Tutor> Tutors { get; private set; }
         public virtual List<Trait> Traits { get; private set; }
         public virtual List<Preference> Preferences { get; private set; }
         public virtual List<SpecialNeeds> SpecialNeeds { get; private set; }
 
-        private PetRefatorado() { }
+        private Pet() { }
 
-        public PetRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, string size, int bredddId, Breed breed, List<TutorRefatorado> tutors, List<Trait> traits, List<Preference> preferences, List<SpecialNeeds> sprecialNeeds) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
+        public Pet(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, string size, int bredddId, Breed breed, List<Tutor> tutors, List<Trait> traits, List<Preference> preferences, List<SpecialNeeds> sprecialNeeds) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
