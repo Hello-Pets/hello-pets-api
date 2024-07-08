@@ -2,7 +2,7 @@ namespace HelloPets.Data.Entities;
 
 public abstract class Entity
 {
-    public int Id { get; private set;}
+    public string Id {get; private set;}
     public string Name { get; private set;}
     public string Document { get; private set; }
     public string DocumentType { get; private set; }
@@ -13,24 +13,8 @@ public abstract class Entity
     public string Bio { get; private set; }
     public DateTime Birthdate { get; private set; }
     public int ProfileImageId { get; private set; }
+    protected Entity() => Id = Guid.NewGuid().ToString()[0..5].ToUpper();
 
-    protected Entity() { }
-
-    protected Entity(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, int profileImageId)
-    {
-        Id = id;
-        Name = name;
-        Document = document;
-        DocumentType = documentType;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        IsActive = isActive;
-        PublicId = publicId;
-        Bio = bio;
-        Birthdate = birthdate;
-        ProfileImageId = profileImageId;
-    }
-
-    public bool Equals(int id) => Id == id;
+    public bool Equals(string id) => Id == id;
     public override int GetHashCode() => Id.GetHashCode();
 }
