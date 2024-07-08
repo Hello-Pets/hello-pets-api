@@ -1,6 +1,8 @@
-﻿namespace Data.ValueObjects
+﻿using Data.Enums;
+
+namespace Data.ValueObjects
 {
-    public class File
+    public class HelloPetsFile
     {
         //Como sera a referencia desta classe em tutor?
         public int Id { get; private set; }
