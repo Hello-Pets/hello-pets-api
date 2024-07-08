@@ -7,8 +7,8 @@ using Data.Entities;
 using Services.ApplicationServices.Interfaces;
 using Microsoft.AspNetCore.Http;
 
-namespace Services.Application_Services
-{
+namespace Services.ApplicationServices;
+
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
@@ -82,4 +82,3 @@ namespace Services.Application_Services
             return userId;
         }
     }
-}

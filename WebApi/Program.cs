@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Services.ApplicationServices;
 using Services.ApplicationServices.Interfaces;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ITokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 //Jwt Configurations
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
