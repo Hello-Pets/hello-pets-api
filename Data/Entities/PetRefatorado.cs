@@ -25,7 +25,7 @@ namespace Data.Entities
 
         private PetRefatorado() { }
 
-        public PetRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, int bredddId, string size)
+        public PetRefatorado(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, int bredddId, string size) : base(id,  name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
