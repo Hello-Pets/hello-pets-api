@@ -1,5 +1,6 @@
 ﻿using Data.ValueObjects;
 using HelloPets.Data.Entities;
+using HelloPets.Data.ValueObjects;
 
 namespace Data.Entities
 {
@@ -9,8 +10,6 @@ namespace Data.Entities
         public string Furcolor { get; private set; }
         public bool Neutered { get; private set; }
         public bool HasMicroChip { get; private set; }
-        public int FileId { get; set; }
-        public virtual HelloPetsFile ProfileImage { get; set; }
         public string Size { get; private set; }
         public int BreedId { get; private set; }
         public Breed Breed { get; private set; }
@@ -22,14 +21,12 @@ namespace Data.Entities
 
         private Pet() { }
 
-        public Pet(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, int fileId, HelloPetsFile profileImage, string size, int breedId, Breed breed, List<Tutor> tutors, List<Trait> traits, List<Preference> preferences, List<SpecialNeeds> specialNeeds, ICollection<UserPets> userPets, HelloPetsFile file) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId, file)
+        public Pet(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string nickname, string furcolor, string bio, DateTime birthdate, bool neutered, bool hasMicroChip, int profileImageId, string size, int breedId, Breed breed, List<Tutor> tutors, List<Trait> traits, List<Preference> preferences, List<SpecialNeeds> specialNeeds, ICollection<UserPets> userPets, HelloPetsFile file) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId, file)
         {
             Nickname = nickname;
             Furcolor = furcolor;
             Neutered = neutered;
             HasMicroChip = hasMicroChip;
-            FileId = fileId;
-            ProfileImage = profileImage;
             Size = size;
             BreedId = breedId;
             Breed = breed;

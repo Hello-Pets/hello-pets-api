@@ -1,4 +1,4 @@
-﻿namespace Data.ValueObjects
+﻿namespace HelloPets.Data.ValueObjects
 {
     public class Trait
     {
