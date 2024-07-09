@@ -1,3 +1,5 @@
+using Data.ValueObjects;
+
 namespace HelloPets.Data.Entities;
 
 public abstract class Entity
@@ -11,10 +13,11 @@ public abstract class Entity
     public bool IsActive { get; private set; }
     public Guid PublicId { get; private set; }
     public string Bio { get; private set; }
-    public DateTime Birthdate { get; private set; }
+    public DateTime? Birthdate { get; private set; }
     public int ProfileImageId { get; private set; }
+    public virtual HelloPetsFile File { get; private set; }
 
-    protected Entity(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, int profileImageId)
+    protected Entity(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, int profileImageId, HelloPetsFile file)
     {
         Id = id;
         Name = name;
@@ -27,6 +30,7 @@ public abstract class Entity
         Bio = bio;
         Birthdate = birthdate;
         ProfileImageId = profileImageId;
+        File = file;
     }
 
     protected Entity() => PublicId = Guid.NewGuid();
