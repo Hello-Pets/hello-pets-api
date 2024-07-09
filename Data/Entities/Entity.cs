@@ -14,10 +14,10 @@ public abstract class Entity
     public Guid PublicId { get; private set; }
     public string Bio { get; private set; }
     public DateTime? Birthdate { get; private set; }
-    public FileType ProfileImageId { get; private set; }
+    public int ProfileImageId { get; private set; }
     public virtual HelloPetsFile File { get; private set; }
 
-    protected Entity(int id, string name, string document, DocumentType documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, FileType profileImageId, HelloPetsFile file)
+    protected Entity(int id, string name, string document, DocumentType documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string bio, DateTime birthdate, int profileImageId, HelloPetsFile file)
     {
         Id = id;
         Name = name;
