@@ -1,4 +1,6 @@
-﻿namespace HelloPets.Data.Entities
+﻿using Data.Enums;
+
+namespace HelloPets.Data.Entities
 {
     public class Pet : Entity
     {
@@ -6,7 +8,7 @@
         public string Furcolor { get; private set; }
         public bool Neutered { get; private set; }
         public bool HasMicroChip { get; private set; }
-        public string Size { get; private set; }
+        public Size Size { get; private set; }
         public int BreedId { get; private set; }
         public virtual Breed Breed { get; private set; }
         public virtual ICollection<Tutor> Tutors { get; private set; }
