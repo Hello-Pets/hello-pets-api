@@ -12,7 +12,7 @@ namespace Data.Entities
         public bool HasMicroChip { get; private set; }
         public string Size { get; private set; }
         public int BreedId { get; private set; }
-        public Breed Breed { get; private set; }
+        public virtual Breed Breed { get; private set; }
         public virtual List<Tutor> Tutors { get; private set; }
         public virtual List<Trait> Traits { get; private set; }
         public virtual List<Preference> Preferences { get; private set; }

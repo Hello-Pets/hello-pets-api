@@ -1,4 +1,5 @@
-﻿using Data.ValueObjects;
+﻿using Data.Enums;
+using Data.ValueObjects;
 using HelloPets.Data.Entities;
 
 namespace Data.Entities
@@ -10,13 +11,13 @@ namespace Data.Entities
         public string Salt { get; private set; }
         public string Phone { get; private set; }
         public string Address { get; private set; }
-        public string UserType { get; private set; }
+        public UserType UserType { get; private set; }
         public virtual List<Pet  > Pets { get; private set; }
         public virtual ICollection<UserPets> UserPets { get; private set; }
 
         private Tutor() { }
 
-        public Tutor(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<Pet> pets, ICollection<UserPets> userPets, HelloPetsFile file) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId, file)
+        public Tutor(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, UserType userType, List<Pet> pets, ICollection<UserPets> userPets, HelloPetsFile file) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId, file)
         {
             Username = username;
             Password = password;
