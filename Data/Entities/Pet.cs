@@ -9,10 +9,10 @@
         public string Size { get; private set; }
         public int BreedId { get; private set; }
         public virtual Breed Breed { get; private set; }
-        public virtual List<Tutor> Tutors { get; private set; }
-        public virtual List<Trait> Traits { get; private set; }
-        public virtual List<Preference> Preferences { get; private set; }
-        public virtual List<SpecialNeeds> SpecialNeeds { get; private set; }
+        public virtual ICollection<Tutor> Tutors { get; private set; }
+        public virtual ICollection<Trait> Traits { get; private set; }
+        public virtual ICollection<Preference> Preferences { get; private set; }
+        public virtual ICollection<SpecialNeeds> SpecialNeeds { get; private set; }
         public virtual ICollection<UserPets> UserPets { get; private set; }
 
         private Pet() { }
