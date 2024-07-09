@@ -9,6 +9,7 @@ namespace HelloPets.Data.Entities
         public string Salt { get; private set; }
         public string Phone { get; private set; }
         public string Address { get; private set; }
+        public virtual HelloPetsFile HelloPetsFile { get; private set; }
         public UserType UserType { get; private set; }
         public virtual ICollection<UserPets> UserPets { get; private set; }
 
