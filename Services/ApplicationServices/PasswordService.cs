@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
-using HelloPets.Application.Services.Interfaces;
+using HelloPets.Services.Application_Services.Interfaces;
 
 namespace HelloPets.Application.Services;
 
