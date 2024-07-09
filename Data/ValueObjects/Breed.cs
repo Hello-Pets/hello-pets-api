@@ -1,6 +1,4 @@
-﻿using HelloPets.Data.ValueObjects;
-
-namespace Data.ValueObjects
+﻿namespace HelloPets.Data.ValueObjects
 {
     public class Breed : ValueObject
     {
