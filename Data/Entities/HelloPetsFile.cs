@@ -1,6 +1,6 @@
 ﻿using Data.Enums;
 
-namespace HelloPets.Data.ValueObjects
+namespace HelloPets.Data.Entities
 {
     public class HelloPetsFile
     {

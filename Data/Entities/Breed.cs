@@ -1,6 +1,6 @@
-﻿namespace HelloPets.Data.ValueObjects
+﻿namespace HelloPets.Data.Entities
 {
-    public class Breed : ValueObject
+    public class Breed
     {
         public int Id { get; private set; }
         public string Name { get; private set; }

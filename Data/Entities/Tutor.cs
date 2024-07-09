@@ -1,8 +1,6 @@
 ﻿using Data.Enums;
-using HelloPets.Data.Entities;
-using HelloPets.Data.ValueObjects;
 
-namespace Data.Entities
+namespace HelloPets.Data.Entities
 {
     public class Tutor : Entity
     {

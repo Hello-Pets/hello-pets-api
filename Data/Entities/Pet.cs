@@ -1,8 +1,4 @@
-﻿using Data.ValueObjects;
-using HelloPets.Data.Entities;
-using HelloPets.Data.ValueObjects;
-
-namespace Data.Entities
+﻿namespace HelloPets.Data.Entities
 {
     public class Pet : Entity
     {

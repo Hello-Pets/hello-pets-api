@@ -1,4 +1,4 @@
-﻿namespace Data.ValueObjects
+﻿namespace HelloPets.Data.Entities
 {
     public class SpecialNeeds
     {
