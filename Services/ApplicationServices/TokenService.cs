@@ -75,7 +75,7 @@ namespace Services.ApplicationServices;
 
         public int GetUserIdFromToken()
         {
-            string id = _httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.UserData) ?? "";
+            string id = _httpContextAccessor?.HttpContext?.User?.FindFirstValue("id") ?? "";
 
             _ = int.TryParse(id, out int userId);
 
