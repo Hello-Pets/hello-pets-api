@@ -22,10 +22,11 @@ namespace Data.Entities
         public int ProfileImageId { get; private set; }
         public string UserType { get; private set; }
         public virtual List<Pet  > Pets { get; private set; }
+        public virtual ICollection<UserPets> UserPets { get; private set; }
 
         private Tutor() { }
 
-        public Tutor(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<Pet> pets) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
+        public Tutor(int id, string name, string document, string documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, string userType, List<Pet> pets, ICollection<UserPets> userPets) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId)
         {
             Id = id;
             Name = name;
@@ -45,6 +46,7 @@ namespace Data.Entities
             ProfileImageId = profileImageId;
             UserType = userType;
             Pets = pets;
+            UserPets = userPets;
         }
     }
 }
