@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Services.ApplicationServices;
 using Services.ApplicationServices.Interfaces;
 using System.Text;
 using System.Text.Json.Serialization;
-using HelloPets.Application.Services;
-using HelloPets.Application.Services.Interfaces;
 using HelloPets.Data.Context;
 using HelloPets.Data.Repositories;
 using HelloPets.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HelloPets.Services.ApplicationServices;
+using HelloPets.Services.ApplicationServices.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -7,7 +7,7 @@ using Services.ApplicationServices.Interfaces;
 using Microsoft.AspNetCore.Http;
 using HelloPets.Data.Entities;
 
-namespace Services.ApplicationServices;
+namespace HelloPets.Services.ApplicationServices;
 
     public class TokenService : ITokenService
     {
