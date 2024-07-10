@@ -1,5 +1,4 @@
 ﻿using HelloPets.Data.ValueObjects;
-using System.ComponentModel.DataAnnotations;
 
 namespace Data.ValueObjects
 {

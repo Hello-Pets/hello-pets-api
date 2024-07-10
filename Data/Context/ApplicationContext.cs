@@ -1,4 +1,3 @@
-using Data.Entities;
 using HelloPets.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using HelloPets.Data.EntitiesConfiguration;

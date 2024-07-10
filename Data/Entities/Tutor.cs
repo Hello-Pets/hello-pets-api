@@ -1,52 +1,30 @@
-﻿using Data.ValueObjects;
-using HelloPets.Application.Services.Interfaces;
-using HelloPets.Data.Entities;
-using HelloPets.Data.ValueObjects;
+﻿using Data.Enums;
 
-namespace Data.Entities
+namespace HelloPets.Data.Entities
 {
     public class Tutor : Entity
     {
-        public Name Name { get; private set; } = null!;
-        public Email Email { get; private set; } = null!;
-        public Password Password { get; private set; } = null!;
-        public Document Document { get; private set; } = null!;
-        public DateTime? BirthDate { get; private set; }
-        public Address Address { get; private set; } = null!;
-        public string Photo { get; private set; } = null!;
-        public MiniBio MiniBio { get; private set; } = null!;
-        public virtual List<Pet> Pets { get; private set; } = new List<Pet>();
-        public Phone Phone { get; private set; } = null!;
-        public bool IsActive { get; private set; } = false;
-        
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        public string Email { get; private set; }
+        public string Salt { get; private set; }
+        public string Phone { get; private set; }
+        public string Address { get; private set; }
+        public UserType UserType { get; private set; }
+        public virtual ICollection<UserPets> UserPets { get; private set; }
+
         private Tutor() { }
 
-        public Tutor(string firtName, string lastName, string email, string password, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorPhoto, string tutorMiniBio, string countryCode, string localCode, string number, IPasswordService passwordService)
+        public Tutor(int id, string name, string document,string email, DocumentType documentType, DateTime createdAt, DateTime updatedAt, bool isActive, Guid publicId, string username, string password, string salt, string bio, DateTime birthdate, string phone, string address, int profileImageId, UserType userType, ICollection<UserPets> userPets, HelloPetsFile file) : base(id, name, document, documentType, createdAt, updatedAt, isActive, publicId, bio, birthdate, profileImageId, file)
         {
-            Validate(firtName, lastName, email, password, documentTypeEnum, documentNumber, birthDate, country, state, city, street, postalCode, tutorMiniBio, countryCode, localCode, number, passwordService);
-
-            Name = new Name(firtName, lastName);
-            Email = new Email(email);
-            Password = new Password(password, passwordService);
-            Document = new Document(documentTypeEnum, documentNumber);
-            BirthDate = new DateTime(birthDate.Year, birthDate.Month, birthDate.Day);
-            Address = new Address(country, state, city, street, postalCode);
-            Photo = tutorPhoto;
-            MiniBio = new MiniBio(tutorMiniBio);
-            Phone = new Phone(countryCode, localCode, number);
-            IsActive = true;
-        }
-
-        public void Validate(string firtName, string lastName, string email, string password, int documentTypeEnum, string documentNumber, DateTime birthDate, string country, string state, string city, string street, string postalCode, string tutorMiniBio, string countryCode, string localCode, string number, IPasswordService passwordService)
-        {
-            _ = new Name(firtName, lastName);
-            _ = new Email(email);
-            _ = new Document(documentTypeEnum, documentNumber);
-            if (birthDate < new DateTime(1905, 03, 10)) throw new ArgumentException("Birthdate cannot be inferior than Deolira Gliceira (search for 'Older woman alive')");
-            _ = new Address(country, state, city, street, postalCode);
-            _ = new MiniBio(tutorMiniBio);
-            _ = new Phone(countryCode, localCode, number);
-            _ = new Password(password, passwordService);
+            Username = username;
+            Password = password;
+            Email = email;
+            Salt = salt;
+            Phone = phone;
+            Address = address;
+            UserType = userType;
+            UserPets = userPets;
         }
     }
 }
