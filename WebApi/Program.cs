@@ -47,6 +47,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseInMemoryDatabase("BancoDeDadosEmMemoria"));
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<ITutorRepository, TutorRepository>();
 builder.Services.AddTransient<IPetRepository, PetRepository>();
 
