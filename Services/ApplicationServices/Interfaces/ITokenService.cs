@@ -1,4 +1,4 @@
-using Data.Entities;
+using HelloPets.Data.Entities;
 
 namespace Services.ApplicationServices.Interfaces;
 

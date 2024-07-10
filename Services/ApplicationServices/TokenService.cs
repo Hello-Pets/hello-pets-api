@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
-using Data.Entities;
 using Services.ApplicationServices.Interfaces;
 using Microsoft.AspNetCore.Http;
+using HelloPets.Data.Entities;
 
 namespace Services.ApplicationServices;
 
