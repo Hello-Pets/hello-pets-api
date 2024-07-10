@@ -3,17 +3,21 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
-using HelloPets.Data.Entities;
+using Data.Entities;
+using Services.ApplicationServices.Interfaces;
+using Microsoft.AspNetCore.Http;
 
-namespace Data.Services
-{
-    public class TokenService
+namespace Services.ApplicationServices;
+
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public string Generate(Tutor tutor)
@@ -43,6 +47,7 @@ namespace Data.Services
                 throw new ApplicationException("Error generating token", ex);
             }
         }
+
         private static IEnumerable<Claim> GetClaims(Tutor tutor)
         {
             return
@@ -67,5 +72,13 @@ namespace Data.Services
 
             return value;
         }
+
+        public int GetUserIdFromToken()
+        {
+            string id = _httpContextAccessor?.HttpContext?.User?.FindFirstValue("id") ?? "";
+
+            _ = int.TryParse(id, out int userId);
+
+            return userId;
+        }
     }
-}

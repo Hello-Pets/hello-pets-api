@@ -1,4 +1,4 @@
-namespace HelloPets.Application.Services.Interfaces;
+namespace HelloPets.Services.Application_Services.Interfaces;
 
 public interface IPasswordService
 {
