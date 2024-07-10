@@ -1,11 +1,9 @@
-﻿namespace Data.Enums
+﻿namespace HelloPets.Data.Enums;
+public enum Size
 {
-    public enum Size
-    {
-        Mini,
-        Small,
-        Medium,
-        Large,
-        Giant
-    }
+    Mini,
+    Small,
+    Medium,
+    Large,
+    Giant
 }
