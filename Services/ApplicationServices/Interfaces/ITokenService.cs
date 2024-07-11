@@ -1,6 +1,6 @@
 using HelloPets.Data.Entities;
 
-namespace Services.ApplicationServices.Interfaces;
+namespace HelloPets.Services.ApplicationServices.Interfaces;
 
 public interface ITokenService
 {

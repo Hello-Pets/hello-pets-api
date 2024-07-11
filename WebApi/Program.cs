@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Services.ApplicationServices.Interfaces;
 using System.Text;
 using System.Text.Json.Serialization;
 using HelloPets.Data.Context;
