@@ -1,11 +1,9 @@
-﻿namespace Data.Enums
+﻿namespace HelloPets.Data.Enums;
+public enum DocumentType
 {
-    public enum DocumentType
-    {
-        CPF,
-        CNPJ,
-        Passport,
-        RGPet,
-        Other
-    }
+    CPF,
+    CNPJ,
+    Passport,
+    RGPet,
+    Other
 }

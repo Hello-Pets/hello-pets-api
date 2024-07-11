@@ -1,8 +1,6 @@
-﻿namespace Data.Enums
+﻿namespace HelloPets.Data.Enums;
+public enum FileType
 {
-    public enum FileType
-    {
-        ProfileImage,
-        LibraryImage
-    }
+    ProfileImage,
+    LibraryImage
 }

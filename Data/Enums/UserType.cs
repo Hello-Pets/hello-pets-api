@@ -1,8 +1,6 @@
-﻿namespace Data.Enums
+﻿namespace HelloPets.Data.Enums;
+public enum UserType
 {
-    public enum UserType
-    {
-        Tutor,
-        Business
-    }
+    Tutor,
+    Business
 }

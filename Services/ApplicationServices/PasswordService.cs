@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
-using HelloPets.Services.Application_Services.Interfaces;
+using HelloPets.Services.ApplicationServices.Interfaces;
 
-namespace HelloPets.Application.Services;
+namespace HelloPets.Services.ApplicationServices;
 
 public class PasswordService : IPasswordService
 {   

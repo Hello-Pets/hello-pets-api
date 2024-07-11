@@ -3,11 +3,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
-using Data.Entities;
-using Services.ApplicationServices.Interfaces;
 using Microsoft.AspNetCore.Http;
+using HelloPets.Data.Entities;
+using HelloPets.Services.ApplicationServices.Interfaces;
 
-namespace Services.ApplicationServices;
+namespace HelloPets.Services.ApplicationServices;
 
     public class TokenService : ITokenService
     {
