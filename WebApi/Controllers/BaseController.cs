@@ -6,8 +6,8 @@ namespace HelloPets.WebApi.Controllers;
 [ApiController]
 public abstract class BaseController : ControllerBase
 {
-    private readonly ITokenService _tokenService;
-    private readonly int _userId;
+    protected readonly ITokenService _tokenService;
+    protected readonly int _userId;
 
     protected BaseController(ITokenService tokenService)
     {
