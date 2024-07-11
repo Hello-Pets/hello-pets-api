@@ -1,4 +1,4 @@
-using Data.Enums;
+using HelloPets.Data.Enums;
 
 namespace HelloPets.Data.Entities;
 
