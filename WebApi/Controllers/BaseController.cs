@@ -7,11 +7,11 @@ namespace HelloPets.WebApi.Controllers;
 public abstract class BaseController : ControllerBase
 {
     private readonly ITokenService _tokenService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly int _userId;
 
-    protected BaseController(ITokenService tokenService, IHttpContextAccessor httpContextAccessor)
+    protected BaseController(ITokenService tokenService)
     {
         _tokenService = tokenService;
-        _httpContextAccessor = httpContextAccessor;
+        _userId = _tokenService.GetUserIdFromToken();
     }
 }
