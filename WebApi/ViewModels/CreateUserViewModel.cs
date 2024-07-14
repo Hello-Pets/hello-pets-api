@@ -7,20 +7,20 @@ public record CreateUserViewModel
 {
     [Required(ErrorMessage = "O campo {0} é obrigatório.")]
     [EmailAddress(ErrorMessage = "O campo {0} é inválido")]
-    public string Email = null!;
+    public string Email { get; set; } = null!;
 
     [Required(ErrorMessage = "O campo {0} é obrigatório.")]
     [EmailAddress(ErrorMessage = "O campo {0} é inválido")]
-    public string EmailVerification = null!;
+    public string EmailVerification { get; set; } = null!;
 
     [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-    [Length(6, 18, ErrorMessage = "Senha deve conter entre 6 e 18 caracteres")]
-    public string Password = null!;
+    [MinLength(6, ErrorMessage = "Senha deve conter mais que 6 caracteres")]
+    public string Password { get; set; } = null!;
 
-    public string? Document;
+    public string? Document { get; set; }
 
     public Guid Salt { get; } = Guid.NewGuid();
 
     [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-    public UserType UserType;
+    public UserType UserType { get; set; }
 }
