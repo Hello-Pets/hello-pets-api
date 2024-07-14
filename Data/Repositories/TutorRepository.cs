@@ -1,6 +1,6 @@
-using Data.Exceptions;
 using HelloPets.Data.Context;
 using HelloPets.Data.Entities;
+using HelloPets.Data.Exceptions;
 using HelloPets.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,10 +16,10 @@ public class TutorRepository : ITutorRepository
     }
 
     public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().ToListAsync();
-    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new DomainExceptionValidation($"Tutor cannot be found by id - {id}");
+    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
     public async Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Name == name).ToListAsync();
-    public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber) ?? throw new DomainExceptionValidation($"Tutor cannot be found by document number - {documentNumber}");
-    public async Task<Tutor> GetTutorByEmailAsync(string email) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Email == email) ?? throw new DomainExceptionValidation($"Tutor cannot be found by email - {email}");
+    public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
+    public async Task<Tutor> GetTutorByEmailAsync(string email) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Email == email);
     public async Task<IEnumerable<Tutor>> GetTutorsByAddressAsync(string address) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == address).ToListAsync();
     public async Task<IEnumerable<Tutor>> GetTutorsByPhoneAsync(string phoneNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Phone == phoneNumber).ToListAsync();
     public async Task<IEnumerable<Tutor>> GetTutorsByPostalCodeAsync(string postalCode) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == postalCode).ToListAsync();
