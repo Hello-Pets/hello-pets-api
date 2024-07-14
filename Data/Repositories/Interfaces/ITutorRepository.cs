@@ -6,6 +6,7 @@ public interface ITutorRepository
 {
     Task<IEnumerable<Tutor>> GetTutorsAsync();
     Task<Tutor> GetTutorByIdAsync(int id);
+    Task<Tutor> GetTutorByPublicIdAsync(Guid publicId);
     Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name);
     Task<Tutor> GetTutorByEmailAsync(string email);
     Task<Tutor> GetTutorByDocumentAsync(string documentNumber);

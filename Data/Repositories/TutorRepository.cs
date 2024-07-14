@@ -1,6 +1,5 @@
 using HelloPets.Data.Context;
 using HelloPets.Data.Entities;
-using HelloPets.Data.Exceptions;
 using HelloPets.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +16,7 @@ public class TutorRepository : ITutorRepository
 
     public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().ToListAsync();
     public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets).SingleOrDefaultAsync(x => x.PublicId == publicId);
     public async Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Name == name).ToListAsync();
     public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
     public async Task<Tutor> GetTutorByEmailAsync(string email) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Email == email);
