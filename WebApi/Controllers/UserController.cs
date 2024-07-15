@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HelloPets.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/")]
 public class UserController : BaseController
 {
     private readonly IPasswordService _passwordService;
@@ -21,7 +21,7 @@ public class UserController : BaseController
         _tutorRepository = tutorRepository;
     }
 
-    [HttpPost("/v1/user")]
+    [HttpPost("v1/user")]
     [AllowAnonymous]
     public async Task<IActionResult> RegisterUser([FromBody]CreateUserViewModel tutor) {
     
@@ -35,7 +35,7 @@ public class UserController : BaseController
             // Cria variavel para a senha hasheada.
             string passwordHashed;
     
-            // Lança excecao caso exista usuario com o mesmo email e com o mesmo tipo ativo.
+            // Lança BadRequest caso exista usuario com o mesmo email e com o mesmo tipo ativo.
             if(existingUser != null && existingUser.IsActive && existingUser.UserType.Equals(tutor.UserType)) BadRequest("Email já cadastrado");
     
             // Caso usuario tenha escolhido o tipo da conta para Business cairá neste fluxo.
@@ -56,7 +56,7 @@ public class UserController : BaseController
                     PublicId = Guid.NewGuid(),
                     Password = passwordHashed, 
                     Salt = tutor.Salt.ToString(),
-                    UserType = UserType.Business
+                    UserType = UserType.Business,
                 };
 
                 // Salva o novo tutor no banco.
@@ -77,7 +77,7 @@ public class UserController : BaseController
                 PublicId = Guid.NewGuid(),
                 Password = passwordHashed, 
                 Salt = tutor.Salt.ToString(),
-                UserType = UserType.Tutor
+                UserType = UserType.Tutor,
             };
 
     
@@ -85,5 +85,38 @@ public class UserController : BaseController
             await _tutorRepository.CreateTutorAsync(newTutor);
     
             return Ok(); 
+    }
+
+    [HttpPatch("v1/user/{publicId}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> UpdateUser(Guid publicId, [FromBody] PatchUserViewModel tutor) {
+        // Busca usuario pela PublicId.
+        var existingUser = await _tutorRepository.GetTutorByPublicIdAsync(publicId);
+
+        // Retorna BadRequest caso usuário informado nao exista ou esteja inativo.
+        if(existingUser is null || !existingUser.IsActive) return BadRequest("Usuário não existe com Id informado.");
+
+        // Verifica se o campo Bio informado é diferente do existente no banco, caso sim altera.
+        if(!existingUser.Bio.Equals(tutor.Bio)) 
+        {
+            existingUser.Bio = tutor.Bio;
+            await _tutorRepository.UpdateTutorAsync(existingUser);
+        }
+
+        // Verifica se o campo Address informado é diferente do existente no banco, caso sim altera.
+        if(!existingUser.Address.Equals(tutor.Address)) 
+        {
+            existingUser.Address = tutor.Address;
+            await _tutorRepository.UpdateTutorAsync(existingUser);
+        }
+
+        // Verifica se o campo ProfileImageId informado é diferente do existente no banco, caso sim altera.
+        if(!existingUser.ProfileImageId.Equals(tutor.ProfileImageId)) 
+        {
+            existingUser.ProfileImageId = tutor.ProfileImageId;
+            await _tutorRepository.UpdateTutorAsync(existingUser);
+        }
+
+        return NoContent();
     }
 }
