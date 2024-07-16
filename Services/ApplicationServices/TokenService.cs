@@ -24,7 +24,7 @@ namespace HelloPets.Services.ApplicationServices;
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var jwtSection = _configuration.GetSection("JwtSection");
+            var jwtSection = _configuration.GetSection("JwtSettings");
             var secretKey = CheckJwtSettings(jwtSection, "SecretKey");
 
             var key = Encoding.ASCII.GetBytes(secretKey);
