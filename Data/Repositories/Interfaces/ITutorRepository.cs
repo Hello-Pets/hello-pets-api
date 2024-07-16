@@ -10,17 +10,9 @@ public interface ITutorRepository
 
     Task<Tutor> GetTutorByPublicIdAsync(Guid publicId);
 
-    Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name);
-
     Task<bool> IsRegistered(string email);
 
     Task<Tutor> GetTutorByDocumentAsync(string documentNumber);
-
-    Task<IEnumerable<Tutor>> GetTutorsByAddressAsync(string address);
-
-    Task<IEnumerable<Tutor>> GetTutorsByPostalCodeAsync(string postalCode);
-
-    Task<IEnumerable<Tutor>> GetTutorsByPhoneAsync(string phoneNumber);
 
     Task<Tutor> CreateTutorAsync(Tutor tutor);
 

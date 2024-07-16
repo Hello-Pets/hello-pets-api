@@ -14,23 +14,15 @@ public class TutorRepository : ITutorRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets).Where(x => x.IsActive).AsNoTracking().ToListAsync();
 
-    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
 
-    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.PublicId == publicId);
+    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.PublicId == publicId && x.IsActive);
 
-    public async Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Name == name).ToListAsync();
-
-    public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
+    public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber && x.IsActive);
 
     public async Task<bool> IsRegistered(string email) => await _context.Tutors.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive == true);
-
-    public async Task<IEnumerable<Tutor>> GetTutorsByAddressAsync(string address) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == address).ToListAsync();
-
-    public async Task<IEnumerable<Tutor>> GetTutorsByPhoneAsync(string phoneNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Phone == phoneNumber).ToListAsync();
-
-    public async Task<IEnumerable<Tutor>> GetTutorsByPostalCodeAsync(string postalCode) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == postalCode).ToListAsync();
     // Melhorar esse metodo.
     public async Task<Tutor> CreateTutorAsync(Tutor tutor)
     {
@@ -53,6 +45,5 @@ public class TutorRepository : ITutorRepository
     {
         tutor.IsActive = false;
         await UpdateTutorAsync(tutor);
-        await _context.SaveChangesAsync();
     }
 }
