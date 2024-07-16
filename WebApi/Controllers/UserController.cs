@@ -37,12 +37,9 @@ public class UserController : BaseController
             // Valida CNPJ caso usuário tenha escolhido tipo Business.
             if(userVM.UserType.Equals(UserType.Business)) 
             {
-                // Valida se o CNPJ informado tem 14 digitos
-                if(userVM.Document is null
-                    || userVM.Document.Length < 14 
-                    || userVM.Document.Length > 14
-                    || userVM.Document.Any(ch => char.IsDigit(ch))) 
-                        return BadRequest("CNPJ deve conter 14 digitos");
+                // Valida se o CNPJ informado tem 14 digitos.
+                if(userVM.DocumentType == DocumentType.CNPJ && userVM.Document?.Length != 14 && userVM.Document.Any(ch => char.IsDigit(ch)))
+                    return BadRequest("CNPJ deve conter 14 digitos");
             }
 
             // Instancia novo TUTOR com base nos dados inseridos no body da request.
@@ -114,7 +111,7 @@ public class UserController : BaseController
             return BadRequest("ID do usuário diferente do fornecido.");
 
         // Acessa o metodo DeleteTutor do repositorio ja marcando usuario como INATIVO e atualizando o UPDATEAT.
-        _tutorRepository.DeleteTutor(user);
+        await _tutorRepository.DeleteTutorAsync(user);
 
         return NoContent();
     }
