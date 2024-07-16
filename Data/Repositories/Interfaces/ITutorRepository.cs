@@ -18,5 +18,5 @@ public interface ITutorRepository
 
     Task<Tutor> UpdateTutorAsync(Tutor tutor);
 
-    void DeleteTutor(Tutor tutor);
+    Task DeleteTutorAsync(Tutor tutor);
 }
