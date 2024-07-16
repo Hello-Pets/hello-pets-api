@@ -15,13 +15,21 @@ public class TutorRepository : ITutorRepository
     }
 
     public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().ToListAsync();
+
     public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets).SingleOrDefaultAsync(x => x.PublicId == publicId);
+
+    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.PublicId == publicId);
+
     public async Task<IEnumerable<Tutor>> GetTutorsByNameAsync(string name) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Name == name).ToListAsync();
+
     public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
-    public async Task<Tutor> GetTutorByEmailAsync(string email) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Email == email);
+
+    public async Task<bool> IsRegistered(string email) => await _context.Tutors.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive == true);
+
     public async Task<IEnumerable<Tutor>> GetTutorsByAddressAsync(string address) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == address).ToListAsync();
+
     public async Task<IEnumerable<Tutor>> GetTutorsByPhoneAsync(string phoneNumber) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Phone == phoneNumber).ToListAsync();
+
     public async Task<IEnumerable<Tutor>> GetTutorsByPostalCodeAsync(string postalCode) => await _context.Tutors.Include(x => x.UserPets).AsNoTracking().Where(x => x.Address == postalCode).ToListAsync();
     // Melhorar esse metodo.
     public async Task<Tutor> CreateTutorAsync(Tutor tutor)
@@ -34,18 +42,17 @@ public class TutorRepository : ITutorRepository
 
     public async Task<Tutor> UpdateTutorAsync(Tutor tutor)
     {
+        tutor.UpdatedAt = DateTime.UtcNow;
         _context.Tutors.Update(tutor);
         await _context.SaveChangesAsync();
 
         return tutor;
     }
 
-    public async Task<Tutor> DeleteTutorAsync(Tutor tutor)
+    public async void DeleteTutor(Tutor tutor)
     {
-        _context.Tutors.Remove(tutor);
+        tutor.IsActive = false;
+        await UpdateTutorAsync(tutor);
         await _context.SaveChangesAsync();
-
-        return tutor;
     }
-
 }
