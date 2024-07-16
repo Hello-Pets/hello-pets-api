@@ -8,14 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloPets.WebApi.Controllers;
 
-[ApiController]
 [Route("api/v1/[controller]")]
 public class UserController : BaseController
 {
     private readonly IPasswordService _passwordService;
     private readonly ITutorRepository _tutorRepository;
 
-    public UserController(ITokenService tokenService, IPasswordService passwordService, ITutorRepository tutorRepository) : base(tokenService)
+    public UserController(ITokenService tokenService,
+    IPasswordService passwordService, 
+    ITutorRepository tutorRepository) : base(tokenService)
     {
         _passwordService = passwordService;
         _tutorRepository = tutorRepository;
@@ -23,84 +24,77 @@ public class UserController : BaseController
 
     [HttpPost("user")]
     [AllowAnonymous]
-    public async Task<IActionResult> RegisterUser([FromBody]CreateUserViewModel tutorVM) 
+    public async Task<IActionResult> RegisterUser([FromBody]CreateUserViewModel userVM) 
     {
             // Verifica se ja existe usuario com email fornecido e retorna BadRequest caso verdadeiro.
-            if(await _tutorRepository.IsRegistered(tutorVM.Email))
+            if(await _tutorRepository.IsRegistered(userVM.Email))
                 return BadRequest("Email já cadastrado");
 
             // Verifica se as senhas coincidem.
-            if(!tutorVM.Password.Trim().ToLower().Equals(tutorVM.PasswordVerification.Trim().ToLower()))
+            if(!userVM.Password.Trim().Equals(userVM.PasswordVerification.Trim()))
                 return BadRequest("Senhas não coincidem");
     
             // Valida CNPJ caso usuário tenha escolhido tipo Business.
-            if(tutorVM.UserType.Equals(UserType.Business)) 
+            if(userVM.UserType.Equals(UserType.Business)) 
             {
                 // Valida se o CNPJ informado tem 14 digitos
-                if(tutorVM.Document is null
-                    || tutorVM.Document.Length < 14 
-                    || tutorVM.Document.Length > 14
-                    || tutorVM.Document.Any(ch => char.IsDigit(ch))) 
+                if(userVM.Document is null
+                    || userVM.Document.Length < 14 
+                    || userVM.Document.Length > 14
+                    || userVM.Document.Any(ch => char.IsDigit(ch))) 
                         return BadRequest("CNPJ deve conter 14 digitos");
             }
 
             // Instancia novo TUTOR com base nos dados inseridos no body da request.
-            var tutor = new Tutor 
+            var user = new Tutor 
             {
-                Name = tutorVM.Name,
-                Email = tutorVM.Email.Trim().ToLower(),
-                UserType = tutorVM.UserType,
-                Document = tutorVM.Document,
+                Name = userVM.Name,
+                Email = userVM.Email.Trim().ToLower(),
+                UserType = userVM.UserType,
+                Document = userVM.Document,
+                Password = _passwordService.CreateHash(userVM.Password + userVM.Salt),
+                Salt = userVM.Salt.ToString(),
             };
-
-            // Faz hash da senha do usuario.
-            var hashedPassword = _passwordService.CreateHash(tutorVM.Password + tutor.Salt);
-            
-            tutor.Password = hashedPassword;
     
             //Salva o novo TUTOR no banco.
-            await _tutorRepository.CreateTutorAsync(tutor);
+            await _tutorRepository.CreateTutorAsync(user);
     
             // Retorna view model com os dados necessarios.
             return Ok(new ReturnUserViewModel
             {
-                PublicId = tutor.PublicId.ToString().ToLower(),
-                Name = tutor.Name,
-                Email = tutor.Email,
-                UserType = tutor.UserType,
-                Token = _tokenService.Generate(tutor)
+                PublicId = user.PublicId.ToString().ToLower(),
+                Name = user.Name,
+                Email = user.Email,
+                UserType = user.UserType,
+                Token = _tokenService.Generate(user)
             }); 
     }
 
     [HttpPatch("user/{publicId}")]
     [AllowAnonymous]
-    public async Task<IActionResult> UpdateUser([FromRoute]Guid publicId, [FromBody] PatchUserViewModel tutor) {
+    public async Task<IActionResult> UpdateUser([FromRoute]Guid publicId, [FromBody] PatchUserViewModel user) {
         // Busca usuario pela PublicId.
         var existingUser = await _tutorRepository.GetTutorByPublicIdAsync(publicId);
 
         // Retorna BadRequest caso usuário informado nao exista ou esteja inativo.
-        if(existingUser is null || !existingUser.IsActive) return BadRequest("Usuário não existe com Id informado.");
+        if(existingUser is null) return BadRequest("Usuário não existe com Id informado.");
+
+        if(existingUser.Id != user.Id)
+            return BadRequest("ID do usuário diferente do fornecido");
 
         // Verifica se o campo Bio informado é diferente do existente no banco, caso sim altera.
-        if(existingUser.Bio != tutor.Bio) 
-        {
-            existingUser.Bio = tutor.Bio;
-            await _tutorRepository.UpdateTutorAsync(existingUser);
-        }
+        if(existingUser.Bio != user.Bio)
+            existingUser.Bio = user.Bio;
 
         // Verifica se o campo Address informado é diferente do existente no banco, caso sim altera.
-        if(existingUser.Address != tutor.Address) 
-        {
-            existingUser.Address = tutor.Address;
-            await _tutorRepository.UpdateTutorAsync(existingUser);
-        }
+        if(existingUser.Address != user.Address) 
+            existingUser.Address = user.Address;
 
         // Verifica se o campo ProfileImageId informado é diferente do existente no banco, caso sim altera.
-        if(existingUser.ProfileImageId != tutor.ProfileImageId) 
-        {
-            existingUser.ProfileImageId = tutor.ProfileImageId;
-            await _tutorRepository.UpdateTutorAsync(existingUser);
-        }
+        if(existingUser.ProfileImageId != user.ProfileImageId) 
+            existingUser.ProfileImageId = user.ProfileImageId;
+
+        await _tutorRepository.UpdateTutorAsync(existingUser);
 
         return NoContent();
     }
@@ -118,10 +112,6 @@ public class UserController : BaseController
         // Retorna BadRequest caso ID seja diferente do fornecido pelo usuario no body.
         if(user.Id != userVM.Id)
             return BadRequest("ID do usuário diferente do fornecido.");
-
-        // Retorna BadRequest caso usuario ja tenha sido deletado.
-        if(!user.IsActive)
-            return BadRequest("Usuário já deletado.");
 
         // Acessa o metodo DeleteTutor do repositorio ja marcando usuario como INATIVO e atualizando o UPDATEAT.
         _tutorRepository.DeleteTutor(user);
