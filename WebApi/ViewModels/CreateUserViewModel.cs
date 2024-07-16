@@ -24,6 +24,8 @@ public record CreateUserViewModel
 
     public Guid Salt { get; set; } = Guid.NewGuid();
 
+    public DocumentType DocumentType { get; set; }
+
     public string? Document { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório.")]
