@@ -38,7 +38,7 @@ public class UserController : BaseController
                     userVM.Document is not null &&
                     userVM.Document?.Length != 14 && 
                     userVM.Document.Any(ch => char.IsDigit(ch)))
-                        return BadRequest("CNPJ deve conter 14 digitos");
+                        return BadRequest("CNPJ inválido");
             }
 
             var user = new Tutor 
@@ -69,7 +69,8 @@ public class UserController : BaseController
     {
         var existingUser = await _tutorRepository.GetTutorByPublicIdAsync(publicId);
 
-        if(existingUser is null) return BadRequest("Usuário não existe com Id informado.");
+        if(existingUser is null) 
+            return BadRequest("Usuário não existe com Id informado.");
 
         if(existingUser.Id != user.Id)
             return BadRequest("ID do usuário diferente do fornecido");
