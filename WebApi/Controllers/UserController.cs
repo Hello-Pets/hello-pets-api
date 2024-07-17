@@ -38,7 +38,10 @@ public class UserController : BaseController
             if(userVM.UserType.Equals(UserType.Business)) 
             {
                 // Valida se o CNPJ informado tem 14 digitos.
-                if(userVM.DocumentType == DocumentType.CNPJ && userVM.Document?.Length != 14 && userVM.Document.Any(ch => char.IsDigit(ch)))
+                if(userVM.DocumentType == DocumentType.CNPJ &&
+                    userVM.Document?.Length != 14 && 
+                    userVM.Document.Any(ch => char.IsDigit(ch)) &&
+                    userVM.Document is not null)
                     return BadRequest("CNPJ deve conter 14 digitos");
             }
 
