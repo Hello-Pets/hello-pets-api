@@ -6,7 +6,7 @@ namespace HelloPets.Data.Context;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<User> Tutors { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
     public DbSet<Pet> Pets { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
