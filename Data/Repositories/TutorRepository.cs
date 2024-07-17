@@ -19,11 +19,9 @@ public class TutorRepository : ITutorRepository
         .Where(x => x.IsActive)
         .ToListAsync();
 
-    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets)
-        .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
+    public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
 
-    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets)
-        .SingleOrDefaultAsync(x => x.PublicId == publicId && x.IsActive);
+    public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.SingleOrDefaultAsync(x => x.PublicId == publicId && x.IsActive);
 
     public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.SingleOrDefaultAsync(x => x.Document == documentNumber && x.IsActive);
 
