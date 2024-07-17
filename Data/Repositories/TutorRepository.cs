@@ -16,14 +16,14 @@ public class TutorRepository : ITutorRepository
     }
 
     public async Task<IEnumerable<Tutor>> GetTutorsAsync() => await _context.Tutors.Include(x => x.UserPets)
-    .Where(x => x.IsActive)
-    .ToListAsync();
+        .Where(x => x.IsActive)
+        .ToListAsync();
 
     public async Task<Tutor> GetTutorByIdAsync(int id) => await _context.Tutors.Include(x => x.UserPets)
-    .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
+        .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
 
     public async Task<Tutor> GetTutorByPublicIdAsync(Guid publicId) => await _context.Tutors.Include(x => x.UserPets)
-    .SingleOrDefaultAsync(x => x.PublicId == publicId && x.IsActive);
+        .SingleOrDefaultAsync(x => x.PublicId == publicId && x.IsActive);
 
     public async Task<Tutor> GetTutorByDocumentAsync(string documentNumber) => await _context.Tutors.SingleOrDefaultAsync(x => x.Document == documentNumber && x.IsActive);
 
