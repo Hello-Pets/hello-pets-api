@@ -1,7 +1,7 @@
 ﻿using HelloPets.Data.Enums;
 
 namespace HelloPets.Data.Entities;
-public class Tutor : Entity
+public class User : Entity
 {
     public string? Username { get; set; }
     public string Password { get; set; }
@@ -12,5 +12,5 @@ public class Tutor : Entity
     public UserType UserType { get; set; }
     public virtual ICollection<UserPets> UserPets { get; set; }
 
-    public Tutor() { }
+    public User() { }
 }

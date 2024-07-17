@@ -6,7 +6,7 @@ namespace HelloPets.Data.Context;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<Tutor> Tutors { get; set; } = null!;
+    public DbSet<User> Tutors { get; set; } = null!;
     public DbSet<Pet> Pets { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
@@ -18,7 +18,7 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new TutorConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new PetConfiguration());
     }
 }

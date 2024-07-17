@@ -4,6 +4,6 @@ namespace HelloPets.Services.ApplicationServices.Interfaces;
 
 public interface ITokenService
 {
-    public string Generate(Tutor tutor);
+    public string Generate(User tutor);
     public int GetUserIdFromToken();
 }

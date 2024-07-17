@@ -47,7 +47,7 @@ builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseInMemoryDatabase
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
-builder.Services.AddTransient<ITutorRepository, TutorRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IPetRepository, PetRepository>();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 

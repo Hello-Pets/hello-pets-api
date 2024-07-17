@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HelloPets.Data.EntitiesConfiguration;
 
-public class TutorConfiguration : IEntityTypeConfiguration<Tutor>
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<Tutor> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         // builder.HasKey(x => x.Id);
 

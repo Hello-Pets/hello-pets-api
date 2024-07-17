@@ -20,7 +20,7 @@ namespace HelloPets.Services.ApplicationServices;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Generate(Tutor tutor)
+        public string Generate(User tutor)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -48,7 +48,7 @@ namespace HelloPets.Services.ApplicationServices;
             }
         }
 
-        private static IEnumerable<Claim> GetClaims(Tutor tutor)
+        private static IEnumerable<Claim> GetClaims(User tutor)
         {
             return
             [

@@ -12,11 +12,11 @@ namespace HelloPets.WebApi.Controllers;
 public class UserController : BaseController
 {
     private readonly IPasswordService _passwordService;
-    private readonly ITutorRepository _tutorRepository;
+    private readonly IUserRepository _tutorRepository;
 
     public UserController(ITokenService tokenService,
     IPasswordService passwordService, 
-    ITutorRepository tutorRepository) : base(tokenService)
+    IUserRepository tutorRepository) : base(tokenService)
     {
         _passwordService = passwordService;
         _tutorRepository = tutorRepository;
@@ -32,16 +32,16 @@ public class UserController : BaseController
             if(!userVM.Password.Trim().Equals(userVM.PasswordVerification.Trim()))
                 return BadRequest("Senhas não coincidem");
     
-            if(userVM.UserType.Equals(UserType.Business)) 
+            if(userVM.UserType == UserType.Business) 
             {
-                if(userVM.DocumentType == DocumentType.CNPJ &&
+                if(userVM.DocumentType != DocumentType.CNPJ &&
                     userVM.Document is not null &&
                     userVM.Document?.Length != 14 && 
                     userVM.Document.Any(ch => char.IsDigit(ch)))
                         return BadRequest("CNPJ inválido");
             }
 
-            var user = new Tutor 
+            var user = new User 
             {
                 Name = userVM.Name,
                 Email = userVM.Email.Trim().ToLower(),
@@ -51,7 +51,7 @@ public class UserController : BaseController
                 Salt = userVM.Salt.ToString(),
             };
     
-            await _tutorRepository.CreateTutorAsync(user);
+            await _tutorRepository.CreateUserAsync(user);
     
             return Ok(new ReturnUserViewModel
             {
@@ -60,14 +60,14 @@ public class UserController : BaseController
                 Email = user.Email,
                 UserType = user.UserType,
                 Token = _tokenService.Generate(user)
-            }); 
+            });
     }
 
     [HttpPatch("user/{publicId}")]
     [AllowAnonymous]
     public async Task<IActionResult> UpdateUser([FromRoute]Guid publicId, [FromBody] PatchUserViewModel user) 
     {
-        var existingUser = await _tutorRepository.GetTutorByPublicIdAsync(publicId);
+        var existingUser = await _tutorRepository.GetUserByPublicIdAsync(publicId);
 
         if(existingUser is null) 
             return BadRequest("Usuário não existe com Id informado.");
@@ -84,7 +84,7 @@ public class UserController : BaseController
         if(existingUser.ProfileImageId != user.ProfileImageId) 
             existingUser.ProfileImageId = user.ProfileImageId;
 
-        await _tutorRepository.UpdateTutorAsync(existingUser);
+        await _tutorRepository.UpdateUserAsync(existingUser);
 
         return NoContent();
     }
@@ -92,7 +92,7 @@ public class UserController : BaseController
     [HttpDelete("user/{publicId}")]
     public async Task<IActionResult> DeleteUser([FromRoute] Guid publicId, [FromBody] DeleteUserViewModel userVM) 
     {
-        var user = await _tutorRepository.GetTutorByPublicIdAsync(publicId);
+        var user = await _tutorRepository.GetUserByPublicIdAsync(publicId);
 
         if(user is null)
             return BadRequest("Usuário não existente.");
@@ -100,7 +100,7 @@ public class UserController : BaseController
         if(user.Id != userVM.Id)
             return BadRequest("ID do usuário diferente do fornecido.");
 
-        await _tutorRepository.DeleteTutorAsync(user);
+        await _tutorRepository.DeleteUserAsync(user);
 
         return NoContent();
     }
