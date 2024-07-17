@@ -12,8 +12,6 @@ public interface IUserRepository
 
     Task<bool> IsRegistered(string email);
 
-    Task<User> GetUserByDocumentAsync(string documentNumber);
-
     Task<User> CreateUserAsync(User user);
 
     Task<User> UpdateUserAsync(User user);

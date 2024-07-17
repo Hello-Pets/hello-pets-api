@@ -26,10 +26,6 @@ public class UserRepository : IUserRepository
         await _context.Tutors.SingleOrDefaultAsync(x => x.PublicId == publicId 
             && x.IsActive);
 
-    public async Task<User> GetUserByDocumentAsync(string documentNumber) => 
-        await _context.Tutors.SingleOrDefaultAsync(x => x.Document == documentNumber 
-            && x.IsActive);
-
     public async Task<bool> IsRegistered(string email) => 
         await _context.Tutors.AnyAsync(x => x.Email.ToLower() == email.ToLower() 
             && x.IsActive == true);
