@@ -27,8 +27,7 @@ public class UserRepository : IUserRepository
             && x.IsActive);
 
     public async Task<bool> IsRegistered(string email) => 
-        await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() 
-            && x.IsActive == true);
+        await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive);
 
     public async Task<User> CreateUserAsync(User tutor)
     {

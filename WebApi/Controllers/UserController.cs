@@ -14,9 +14,8 @@ public class UserController : BaseController
     private readonly IPasswordService _passwordService;
     private readonly IUserRepository _tutorRepository;
 
-    public UserController(ITokenService tokenService,
-    IPasswordService passwordService, 
-    IUserRepository tutorRepository) : base(tokenService)
+    public UserController(ITokenService tokenService, IPasswordService passwordService, 
+        IUserRepository tutorRepository) : base(tokenService)
     {
         _passwordService = passwordService;
         _tutorRepository = tutorRepository;
@@ -26,15 +25,15 @@ public class UserController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> RegisterUser([FromBody]CreateUserViewModel userVM) 
     {
-            if(await _tutorRepository.IsRegistered(userVM.Email))
+            if (await _tutorRepository.IsRegistered(userVM.Email))
                 return BadRequest("Email já cadastrado");
 
-            if(!userVM.Password.Trim().Equals(userVM.PasswordVerification.Trim()))
+            if (userVM.Password.Trim() != userVM.PasswordVerification.Trim())
                 return BadRequest("Senhas não coincidem");
     
-            if(userVM.UserType == UserType.Business) 
+            if (userVM.UserType == UserType.Business) 
             {
-                if(userVM.DocumentType != DocumentType.CNPJ &&
+                if (userVM.DocumentType != DocumentType.CNPJ &&
                     userVM.Document is not null &&
                     userVM.Document?.Length != 14 && 
                     userVM.Document.Any(ch => char.IsDigit(ch)))
@@ -69,19 +68,19 @@ public class UserController : BaseController
     {
         var existingUser = await _tutorRepository.GetUserByPublicIdAsync(publicId);
 
-        if(existingUser is null) 
+        if (existingUser == null) 
             return BadRequest("Usuário não existe com Id informado.");
 
-        if(existingUser.Id != user.Id)
+        if (existingUser.Id != user.Id)
             return BadRequest("ID do usuário diferente do fornecido");
 
-        if(existingUser.Bio != user.Bio)
+        if (existingUser.Bio != user.Bio)
             existingUser.Bio = user.Bio;
 
-        if(existingUser.Address != user.Address) 
+        if (existingUser.Address != user.Address) 
             existingUser.Address = user.Address;
 
-        if(existingUser.ProfileImageId != user.ProfileImageId) 
+        if (existingUser.ProfileImageId != user.ProfileImageId) 
             existingUser.ProfileImageId = user.ProfileImageId;
 
         await _tutorRepository.UpdateUserAsync(existingUser);
@@ -94,10 +93,10 @@ public class UserController : BaseController
     {
         var user = await _tutorRepository.GetUserByPublicIdAsync(publicId);
 
-        if(user is null)
+        if (user is null) 
             return BadRequest("Usuário não existente.");
 
-        if(user.Id != userVM.Id)
+        if (user.Id != userVM.Id)
             return BadRequest("ID do usuário diferente do fornecido.");
 
         await _tutorRepository.DeleteUserAsync(user);
