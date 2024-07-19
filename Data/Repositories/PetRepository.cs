@@ -1,7 +1,6 @@
-using Data.Exceptions;
 using HelloPets.Data.Context;
 using HelloPets.Data.Entities;
-using HelloPets.Data.Enums;
+using HelloPets.Data.Exceptions;
 using HelloPets.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +16,8 @@ public class PetRepository : IPetRepository
     }
 
     public async Task<IEnumerable<Pet>> GetPetsAsync() => await _context.Pets.Include(x => x.UserPets).AsNoTracking().ToListAsync();
-    public async Task<Pet> GetPetByIdAsync(int id) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new DomainExceptionValidation($"Pet cannot be found by id - {id}");
-    public async Task<Pet> GetPetByDocumentAsync(string documentNumber) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber) ?? throw new DomainExceptionValidation($"Pet cannot be found by document number - {documentNumber}");
+    public async Task<Pet> GetPetByIdAsync(int id) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+    public async Task<Pet> GetPetByDocumentAsync(string documentNumber) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
     public async Task<IEnumerable<Pet>> GetPetsByBreedAsync(string breed) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Breed.Name == breed).ToListAsync();
     public async Task<IEnumerable<Pet>> GetPetsByNicknameAsync(string nickName) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Nickname == nickName).ToListAsync();
     public async Task<IEnumerable<Pet>> GetPetsBySpecieAsync(string specie) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Breed.Specie.Name == specie).ToListAsync();
