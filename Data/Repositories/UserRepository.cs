@@ -26,6 +26,10 @@ public class UserRepository : IUserRepository
         await _context.Users.SingleOrDefaultAsync(x => x.PublicId == publicId 
             && x.IsActive);
 
+    public async Task<User> GetUserByEmailAsync(string email) =>
+        await _context.Users.SingleOrDefaultAsync(x => x.Email == email
+            && x.IsActive);
+
     public async Task<bool> IsRegistered(string email) => 
         await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive);
 

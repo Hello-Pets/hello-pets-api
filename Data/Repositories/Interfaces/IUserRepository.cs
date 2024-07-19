@@ -10,6 +10,8 @@ public interface IUserRepository
 
     Task<User> GetUserByPublicIdAsync(Guid publicId);
 
+    Task<User> GetUserByEmailAsync(string email);
+
     Task<bool> IsRegistered(string email);
 
     Task<User> CreateUserAsync(User user);
