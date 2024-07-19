@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public virtual int SpecieId { get; set; }
+        public int SpecieId { get; set; }
 
         public virtual Specie Specie { get; set; }
 
