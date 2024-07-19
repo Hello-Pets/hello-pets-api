@@ -2,9 +2,14 @@
 {
     public class Breed
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public Specie Specie { get; private set; }
-        public string IsActive { get; private set; }
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public virtual int SpecieId { get; set; }
+
+        public virtual Specie Specie { get; set; }
+
+        public string IsActive { get; set; }
     }
 }
