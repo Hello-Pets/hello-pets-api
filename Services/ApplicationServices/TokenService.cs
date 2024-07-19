@@ -20,11 +20,11 @@ namespace HelloPets.Services.ApplicationServices;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Generate(Tutor tutor)
+        public string Generate(User tutor)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var jwtSection = _configuration.GetSection("JwtSection");
+            var jwtSection = _configuration.GetSection("JwtSettings");
             var secretKey = CheckJwtSettings(jwtSection, "SecretKey");
 
             var key = Encoding.ASCII.GetBytes(secretKey);
@@ -48,7 +48,7 @@ namespace HelloPets.Services.ApplicationServices;
             }
         }
 
-        private static IEnumerable<Claim> GetClaims(Tutor tutor)
+        private static IEnumerable<Claim> GetClaims(User tutor)
         {
             return
             [

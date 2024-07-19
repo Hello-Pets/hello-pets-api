@@ -8,16 +8,16 @@ public class PasswordService : IPasswordService
 {   
     public string CreateHash(string password)
     {
-        using (var sha256 = SHA256.Create()) {
-            var salt = RandomNumberGenerator.GetBytes(16);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] saltedPassword = new byte[salt.Length + passwordBytes.Length];
-            Buffer.BlockCopy(salt, 0, saltedPassword, salt.Length, passwordBytes.Length);
-            Buffer.BlockCopy(passwordBytes, 0, saltedPassword, salt.Length, passwordBytes.Length);
-            byte[] hash = sha256.ComputeHash(saltedPassword);
-            string hashedPassword = Convert.ToBase64String(hash);
+        using (var sha = SHA256.Create())
+        {
+            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            return hashedPassword;
+            var builder = new StringBuilder();
+
+            foreach (var b in bytes)
+                builder.Append(b.ToString("x2"));
+
+            return builder.ToString();
         }
     }
 

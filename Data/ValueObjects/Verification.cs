@@ -1,4 +1,4 @@
-﻿using Data.Exceptions;
+﻿using HelloPets.Data.Exceptions;
 using HelloPets.Data.ValueObjects;
 
 namespace Data.ValueObjects

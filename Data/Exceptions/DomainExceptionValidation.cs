@@ -1,6 +1,5 @@
-﻿namespace Data.Exceptions
-{
-    internal class DomainExceptionValidation : Exception
+﻿namespace HelloPets.Data.Exceptions;
+    public class DomainExceptionValidation : Exception
     {
         public DomainExceptionValidation(string message) : base(message) { }
 
@@ -9,4 +8,3 @@
             if (message) throw new DomainExceptionValidation(errorMessage);
         }
     }
-}
