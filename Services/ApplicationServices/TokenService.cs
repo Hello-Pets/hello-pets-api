@@ -20,7 +20,7 @@ namespace HelloPets.Services.ApplicationServices;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Generate(User tutor)
+        public string Generate(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -31,7 +31,7 @@ namespace HelloPets.Services.ApplicationServices;
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(GetClaims(tutor))/*Claims separado em um novo metodo*/,
+                Subject = new ClaimsIdentity(GetClaims(user)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature),
                 Expires = DateTime.UtcNow.AddHours(12)
@@ -50,8 +50,8 @@ namespace HelloPets.Services.ApplicationServices;
 
         private static IEnumerable<Claim> GetClaims(User tutor)
         {
-            return
-            [
+            return new[]
+            {
                 new Claim("id", tutor.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, tutor.Name),
                 new Claim(JwtRegisteredClaimNames.Email, tutor.Email),
@@ -62,7 +62,7 @@ namespace HelloPets.Services.ApplicationServices;
 
                 //Cria um Id unico para o token dando maior seguranca
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            ];
+            };
         }
 
         private string CheckJwtSettings(IConfigurationSection jwtSection, string key)
