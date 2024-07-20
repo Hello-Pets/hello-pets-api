@@ -2,7 +2,7 @@
 
 namespace WebApi.ViewModels
 {
-    public class LoginViewModel
+    public record LoginViewModel
     {
         [Required(ErrorMessage = "Email obrigatorio")]
         [EmailAddress(ErrorMessage = "Email invalido")]
