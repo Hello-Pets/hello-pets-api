@@ -29,7 +29,7 @@ namespace WebApi.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var user = await _userRepository.GetUserByEmailAsync(request.Email);
-            if (user == null && !_passwordService.CompareHashs(request.Password, user.Password, user.Salt.ToByteArray()));
+            if (user == null || !_passwordService.CompareHashs(request.Password, user.Password, user.Salt.ToByteArray()))
             {
                 return Unauthorized("Email or password invalid");
             }
