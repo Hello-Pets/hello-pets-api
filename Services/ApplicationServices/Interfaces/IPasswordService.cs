@@ -2,7 +2,7 @@ namespace HelloPets.Services.ApplicationServices.Interfaces;
 
 public interface IPasswordService
 {
-    public string CreateHash(string password);
+    public string CreateHash(byte[] inputBytes);
 
-    public bool ComparePassword(string passwordInput, string storedPassword, string storedSalt);
+    public bool ComparePassword(string passwordInput, string storedPassword, Guid storedSalt);
 }

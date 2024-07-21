@@ -6,12 +6,11 @@ namespace HelloPets.Services.ApplicationServices;
 
 public class PasswordService : IPasswordService
 {
-    public string CreateHash(string password)
+    public string CreateHash(byte[] inputBytes)
     {
         using (var sha = SHA256.Create())
         {
-            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-
+            var bytes = sha.ComputeHash(inputBytes);
             var builder = new StringBuilder();
 
             foreach (var b in bytes)
@@ -20,37 +19,23 @@ public class PasswordService : IPasswordService
             return builder.ToString();
         }
     }
-
-    public bool ComparePassword(string inputPassword, string storedPassword, string storedSalt)
+    public string CreateHash(string password)
     {
-        using (var sha256 = SHA256.Create())
-        {
-            byte[] inputSaltBytes = Convert.FromBase64String(storedSalt);
-            byte[] inputPasswordBytes = Encoding.UTF8.GetBytes(inputPassword);
-
-            byte[] saltedInputPassword = new byte[inputSaltBytes.Length + inputPasswordBytes.Length];
-            Buffer.BlockCopy(inputSaltBytes, 0, saltedInputPassword, 0, inputSaltBytes.Length);
-            Buffer.BlockCopy(inputPasswordBytes, 0, saltedInputPassword, inputSaltBytes.Length, inputPasswordBytes.Length);
-
-            byte[] inputHash = sha256.ComputeHash(saltedInputPassword);
-
-            return ConstantTimeEquals(inputHash, Convert.FromBase64String(storedPassword));
-        }
+        byte[] inputBytes = Encoding.UTF8.GetBytes(password);
+        return CreateHash(inputBytes);
     }
 
-    public static bool ConstantTimeEquals(byte[] a, byte[] b)
+    public bool ComparePassword(string inputPassword, string storedPassword, Guid storedSalt)
     {
-        if (a.Length != b.Length)
-        {
-            return false;
-        }
+        byte[] storedSaltBytes = storedSalt.ToByteArray();
+        byte[] inputPasswordBytes = Encoding.UTF8.GetBytes(inputPassword);
 
-        int result = 0;
-        for (int i = 0; i < a.Length; i++)
-        {
-            result |= a[i] ^ b[i];
-        }
+        byte[] arrayInputSaltedPassword = new byte[storedSaltBytes.Length + inputPasswordBytes.Length];
+        Buffer.BlockCopy(storedSaltBytes, 0, arrayInputSaltedPassword, 0, storedSaltBytes.Length);
+        Buffer.BlockCopy(inputPasswordBytes, 0, arrayInputSaltedPassword, storedSaltBytes.Length, inputPasswordBytes.Length);
 
-        return result == 0;
+        string inputPasswordSaltedAndHashed = CreateHash(arrayInputSaltedPassword);
+
+        return Equals(inputPasswordSaltedAndHashed, storedPassword);
     }
 }
