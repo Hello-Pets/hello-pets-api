@@ -5,4 +5,5 @@ public interface IPasswordService
     public string CreateHash(byte[] inputBytes);
 
     public bool ComparePassword(string passwordInput, string storedPassword, Guid storedSalt);
+    string CreateHash(string v);
 }
