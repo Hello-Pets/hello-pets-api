@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> RequestToken([FromBody] LoginViewModel request)
         {
             var user = await _userRepository.GetUserByEmailAsync(request.Email);
-            if (user == null || !_passwordService.ComparePassword(request.Password, user.Password, Convert.ToBase64String(user.Salt.ToByteArray())))
+            if (user == null || !_passwordService.ComparePassword(request.Password, user.Password, user.Salt))
             {
                 return Unauthorized("Email ou senha invalido");
             }
@@ -37,7 +37,30 @@ namespace WebApi.Controllers
             var token = _tokenService.Generate(user);
 
             return Ok(new { token });
+        }
 
+        [AllowAnonymous]
+        [HttpPost("Forgot Password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel request)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+            if (user == null) return BadRequest("Email nao pode estar em branco");
+
+
+
+
+            return Ok();
+        }
+
+
+        [Authorize]
+        [HttpPost("Update Password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] LoginViewModel request)
+        {
+
+
+
+            return Ok();
         }
     }
 }
