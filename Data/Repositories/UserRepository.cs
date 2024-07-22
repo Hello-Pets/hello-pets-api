@@ -14,30 +14,50 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync() => 
+    public async Task<IEnumerable<User>> GetUsersAsync() =>
         await _context.Users.Where(x => x.IsActive)
             .ToListAsync();
 
-    public async Task<User> GetUserByIdAsync(int id) => 
-        await _context.Users.SingleOrDefaultAsync(x => x.Id == id 
+    public async Task<User> GetUserByIdAsync(int id) =>
+        await _context.Users.SingleOrDefaultAsync(x => x.Id == id
             && x.IsActive);
 
     public async Task<User> GetUserByEmailAsync(string email) =>
         await _context.Users.SingleOrDefaultAsync(x => x.Email == email
             && x.IsActive);
 
-    public async Task<User> GetUserByPublicIdAsync(Guid publicId) => 
-        await _context.Users.SingleOrDefaultAsync(x => x.PublicId == publicId 
+    public async Task<Guid> GetSaltByEmailAsync(string email)
+    {
+        var user = await _context.Users
+            .Where(x => x.Email == email)
+            .Select(x => x.Salt)
+            .SingleOrDefaultAsync();
+
+        return user;
+    }
+
+    public async Task<string> GetPasswordByEmailAsync(string email)
+    {
+        var user = await _context.Users
+            .Where(x => x.Email == email)
+            .Select(x => x.Password)
+            .SingleOrDefaultAsync();
+
+        return user;
+    }
+
+    public async Task<User> GetUserByPublicIdAsync(Guid publicId) =>
+        await _context.Users.SingleOrDefaultAsync(x => x.PublicId == publicId
             && x.IsActive);
 
-    public async Task<bool> IsRegistered(string email) => 
+    public async Task<bool> IsRegistered(string email) =>
         await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive);
 
     public async Task<User> CreateUserAsync(User tutor)
     {
         var newTutor = await _context.Users.AddAsync(tutor);
-        await _context.SaveChangesAsync();       
-        
+        await _context.SaveChangesAsync();
+
         return newTutor.Entity;
     }
 

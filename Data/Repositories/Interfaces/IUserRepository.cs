@@ -10,6 +10,10 @@ public interface IUserRepository
 
     Task<User> GetUserByEmailAsync(string email);
 
+    Task<Guid> GetSaltByEmailAsync(string email);
+
+    Task<string> GetPasswordByEmailAsync(string email);
+
     Task<User> GetUserByPublicIdAsync(Guid publicId);
 
     Task<bool> IsRegistered(string email);
