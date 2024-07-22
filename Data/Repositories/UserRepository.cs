@@ -22,6 +22,10 @@ public class UserRepository : IUserRepository
         await _context.Users.SingleOrDefaultAsync(x => x.Id == id 
             && x.IsActive);
 
+    public async Task<User> GetUserByEmailAsync(string email) =>
+        await _context.Users.SingleOrDefaultAsync(x => x.Email == email
+            && x.IsActive);
+
     public async Task<User> GetUserByPublicIdAsync(Guid publicId) => 
         await _context.Users.SingleOrDefaultAsync(x => x.PublicId == publicId 
             && x.IsActive);
