@@ -30,57 +30,69 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> UserLogin([FromBody] LoginViewModel request)
         {
-            //Verifica se email e senha sao nulos
-            if (request.Email == null || request.Password == null)
-                return BadRequest("Email e senha nao podem estar em branco");
+            var user = await _userRepository.GetUserByEmailAsync(request.Email);
 
-            //Verifica se o email esta registrado
-            if (await _userRepository.IsRegistered(request.Email) == false)
-                BadRequest("Email ou senha invalido");
-            
+            if (user == default)
+                return BadRequest("Usuario ou senha incorretos");
 
+            if (!_passwordService.ComparePassword
+                (request.Password,
+                user.Password,
+                user.Salt.ToString()))
+            {
+                return BadRequest("Usuario ou senha incorretos");
+            }
 
+            var token = _tokenService.Generate(user, TimeSpan.FromDays(7));
 
-            //Recupera o Salt do email
-            var storedSalt = _userRepository.GetSaltByEmailAsync(request.Email).ToString();
-
-            //Recebe o email digitado
-            var inputEmail = await _userRepository.GetUserByEmailAsync(request.Email.ToString());
-
-            //Retorna o Password armazenado
-            string storedPassword = await _userRepository.GetPasswordByEmailAsync(request.Email);
-            
-            //Compara os Passwords
-            var validatingPassword = await _passwordService.CompareHashs(request.Password, storedPassword, storedSalt);
-
-            var token = _tokenService.Generate(inputEmail);
-
-            return Ok(token);
+            return Ok(new ReturnUserViewModel()
+            {
+                PublicId = user.PublicId.ToString(),
+                Email = user.Email,
+                Name = user.Name,
+                UserType = user.UserType,
+                Token = token
+            });
         }
 
         [AllowAnonymous]
-        [HttpPost("Forgot Password")]
+        [HttpPost("Forgot-Password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel request)
         {
-            if (request == null) return BadRequest("Email nao pode estar em branco");
-
             var user = await _userRepository.GetUserByEmailAsync(request.Email);
 
+            if (user == default)
+                return Ok();
 
+            //Implementar API
 
+            var token = _tokenService.Generate(user, TimeSpan.FromMinutes(5));
 
-            return Ok();
+            return Ok(new { token });
         }
 
 
         [Authorize]
-        [HttpPost("Update Password")]
+        [HttpPost("Update-Password")]
         public async Task<IActionResult> UpdatePassword([FromBody] LoginViewModel request)
         {
+            var user = await _userRepository.GetUserByEmailAsync(request.Email);
 
+            user.Salt = Guid.NewGuid();
+            user.Password = _passwordService.CreateHash(user.Password + user.Salt);
 
+            var token = _tokenService.Generate(user, TimeSpan.FromDays(7));
 
-            return Ok();
+            await _userRepository.UpdateUserAsync(user);
+
+            return Ok(new ReturnUserViewModel()
+            {
+                PublicId = user.PublicId.ToString(),
+                Email = user.Email,
+                Name = user.Name,
+                UserType = user.UserType,
+                Token = token
+            });
         }
     }
 }
