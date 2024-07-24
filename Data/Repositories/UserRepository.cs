@@ -19,35 +19,15 @@ public class UserRepository : IUserRepository
             .ToListAsync();
 
     public async Task<User> GetUserByIdAsync(int id) =>
-        await _context.Users.SingleOrDefaultAsync(x => x.Id == id
+        await _context.Users.FirstOrDefaultAsync(x => x.Id == id
             && x.IsActive);
 
     public async Task<User> GetUserByEmailAsync(string email) =>
-        await _context.Users.SingleOrDefaultAsync(x => x.Email == email
+        await _context.Users.FirstOrDefaultAsync(x => x.Email == email
             && x.IsActive);
 
-    public async Task<Guid> GetSaltByEmailAsync(string email)
-    {
-        var user = await _context.Users
-            .Where(x => x.Email == email)
-            .Select(x => x.Salt)
-            .SingleOrDefaultAsync();
-
-        return user;
-    }
-
-    public async Task<string> GetPasswordByEmailAsync(string email)
-    {
-        var user = await _context.Users
-            .Where(x => x.Email == email)
-            .Select(x => x.Password)
-            .SingleOrDefaultAsync();
-
-        return user;
-    }
-
     public async Task<User> GetUserByPublicIdAsync(Guid publicId) =>
-        await _context.Users.SingleOrDefaultAsync(x => x.PublicId == publicId
+        await _context.Users.FirstOrDefaultAsync(x => x.PublicId == publicId
             && x.IsActive);
 
     public async Task<bool> IsRegistered(string email) =>
