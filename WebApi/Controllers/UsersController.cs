@@ -60,7 +60,7 @@ public class UsersController : BaseController
             Name = user.Name,
             Email = user.Email,
             UserType = user.UserType,
-            Token = _tokenService.Generate(user)
+            Token = _tokenService.Generate(user, TimeSpan.FromDays(7))
         });
     }
 
