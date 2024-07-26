@@ -42,8 +42,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-
-builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseInMemoryDatabase("BancoDeDadosEmMemoria"));
+builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect("DefaultConnection")));
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
