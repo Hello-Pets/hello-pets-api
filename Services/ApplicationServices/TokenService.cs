@@ -20,7 +20,7 @@ namespace HelloPets.Services.ApplicationServices;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Generate(User tutor)
+        public string Generate(User tutor, TimeSpan periodo)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -34,7 +34,7 @@ namespace HelloPets.Services.ApplicationServices;
                 Subject = new ClaimsIdentity(GetClaims(tutor))/*Claims separado em um novo metodo*/,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature),
-                Expires = DateTime.UtcNow.AddHours(12)
+                Expires = DateTime.UtcNow.Add(periodo)
             };
 
             try

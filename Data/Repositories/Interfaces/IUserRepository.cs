@@ -8,6 +8,8 @@ public interface IUserRepository
 
     Task<User> GetUserByIdAsync(int id);
 
+    Task<User> GetUserByEmailAsync(string email);
+
     Task<User> GetUserByPublicIdAsync(Guid publicId);
 
     Task<bool> IsRegistered(string email);
