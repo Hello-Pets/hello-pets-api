@@ -42,7 +42,9 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect("DefaultConnection")));
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseMySql(conn, ServerVersion.AutoDetect(conn)));
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
