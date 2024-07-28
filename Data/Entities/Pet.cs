@@ -1,6 +1,7 @@
 ﻿using HelloPets.Data.Enums;
 
 namespace HelloPets.Data.Entities;
+
 public class Pet : Entity
 {
     public string Nickname { get; set; }
