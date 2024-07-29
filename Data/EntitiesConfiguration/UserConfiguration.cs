@@ -20,13 +20,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.DocumentType).IsRequired(false);
 
-        builder.Property(x => x.CreatedAt).IsRequired();
+        builder.Property(x => x.CreatedAt).IsRequired(true);
 
         builder.Property(x => x.UpdatedAt).IsRequired(false);
 
-        builder.Property(x => x.IsActive).IsRequired().HasDefaultValue(true);
+        builder.Property(x => x.IsActive).IsRequired(true).HasDefaultValue(true);
 
-        builder.Property(x => x.PublicId).IsRequired();
+        builder.Property(x => x.PublicId).IsRequired(true);
 
         builder.Property(x => x.Bio).HasMaxLength(255).IsRequired(false);
 
@@ -34,7 +34,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.OwnsOne(x => x.File).Property(x => x.Id).IsRequired(false);
 
-        builder.OwnsOne(x => x.File).Property(x => x.Name).HasMaxLength(255).IsRequired(false);
+        builder.OwnsOne(x => x.File).Property(x => x.Name).HasMaxLength(100).IsRequired(false);
 
         builder.OwnsOne(x => x.File).Property(x => x.Type).IsRequired(false);
 
@@ -42,17 +42,17 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Username).HasMaxLength(60).IsRequired(false);
 
-        builder.Property(x => x.Password).IsRequired();
+        builder.Property(x => x.Password).IsRequired(true);
 
-        builder.Property(x => x.Email).IsRequired();
+        builder.Property(x => x.Email).IsRequired(true);
 
-        builder.Property(x => x.Salt).IsRequired();
+        builder.Property(x => x.Salt).IsRequired(true);
 
         builder.Property(x => x.Phone).HasMaxLength(20).IsRequired(false);
 
         builder.Property(x => x.Address).HasMaxLength(120).IsRequired(false);
 
-        builder.Property(x => x.UserType).IsRequired();
+        builder.Property(x => x.UserType).IsRequired(true);
 
         builder.HasMany(x => x.UserPets).WithOne(x => x.User).IsRequired(false);
     }

@@ -8,42 +8,54 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
-        // builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id);
 
-        // builder.OwnsOne(x => x.Nickname).Property(x => x.Name).HasColumnType("NVARCHAR").HasMaxLength(99).HasColumnName("FirstName").IsRequired();
+        builder.Property(x => x.Name).HasMaxLength(30).IsRequired(true);
 
-        // builder.Property(x => x.Photo).HasColumnName("ProfilePicture").HasMaxLength(255).IsRequired(false);
+        builder.Property(x => x.Document).HasMaxLength(40).IsRequired(false);
 
-        // builder.OwnsOne(x => x.Document).Property(x => x.Type).HasColumnName("DocumentType").IsRequired();
+        builder.Property(x => x.DocumentType).IsRequired(false);
 
-        // builder.OwnsOne(x => x.Document).Property(x => x.Number).HasColumnName("DocumentNumber").IsRequired();
+        builder.Property(x => x.CreatedAt).IsRequired(true);
 
-        // builder.Property(x => x.BirthDate).HasColumnName("BirthDate").IsRequired();
+        builder.Property(x => x.UpdatedAt).IsRequired(false);
 
-        // builder.OwnsOne(x => x.PreferencesAndDislikes).Property(x => x.Preferences).HasColumnName("Preferences").IsRequired();
+        builder.Property(x => x.IsActive).IsRequired(true).HasDefaultValue(true);
 
-        // builder.OwnsOne(x => x.PreferencesAndDislikes).Property(x => x.Dislikes).HasColumnName("Dislikes").IsRequired();
+        builder.Property(x => x.PublicId).IsRequired(true);
 
-        // builder.OwnsOne(x => x.Specie).Property(x => x.PetSpecie).HasColumnName("Specie").IsRequired();
+        builder.Property(x => x.Bio).HasMaxLength(255).IsRequired(false);
 
-        // builder.OwnsOne(x => x.Specie).Property(x => x.Breed).HasColumnName("Breed").IsRequired();
+        builder.Property(x => x.Birthdate).IsRequired(false);
 
-        // builder.OwnsOne(x => x.MiniBio).Property(x => x.Description).HasColumnName("MiniBio").HasMaxLength(100).IsRequired();
+        builder.OwnsOne(x => x.File).Property(x => x.Id).IsRequired(false);
 
-        // builder.Property(x => x.PetsCoats).HasColumnName("Coat").IsRequired();
+        builder.OwnsOne(x => x.File).Property(x => x.Name).HasMaxLength(100).IsRequired(false);
 
-        // builder.OwnsOne(x => x.BodyMetrics).Property(x => x.Height).HasColumnName("Height").IsRequired();
+        builder.OwnsOne(x => x.File).Property(x => x.Type).IsRequired(false);
 
-        // builder.OwnsOne(x => x.BodyMetrics).Property(x => x.Weight).HasColumnName("Weight").IsRequired();
+        builder.OwnsOne(x => x.File).Property(x => x.PublicLink).HasMaxLength(255).IsRequired(false);
 
-        // builder.OwnsOne(x => x.BodyMetrics).Property(x => x.Length).HasColumnName("Length").IsRequired();
+        builder.Property(x => x.Furcolor).HasMaxLength(20).IsRequired(false);
 
-        // builder.Property(x => x.Personality).HasColumnName("Personality").IsRequired();
+        builder.Property(x => x.Neutered).HasDefaultValue(false).IsRequired(false);
 
-        // builder.Property(x => x.Neutered).HasColumnName("Neutered").IsRequired();
+        builder.Property(x => x.HasMicroChip).HasDefaultValue(false).IsRequired(false);
 
-        // builder.Property(x => x.HasMicrochip).HasColumnName("Microchip").IsRequired();
+        builder.Property(x => x.Size).IsRequired(false);
 
-        // builder.Property(x => x.SpecialNeeds).HasColumnName("SpecialNeeds").IsRequired();
+        builder.OwnsOne(x => x.Breed).Property(x => x.Id).IsRequired(false);
+
+        builder.OwnsOne(x => x.Breed).Property(x => x.Name).HasMaxLength(20).IsRequired(false);
+
+        builder.OwnsOne(x => x.Breed).OwnsOne(x => x.Specie).Property(x => x.Id).IsRequired(false);
+
+        builder.OwnsOne(x => x.Breed).OwnsOne(x => x.Specie).Property(x => x.Name).HasMaxLength(30).IsRequired(false);
+
+        builder.OwnsOne(x => x.Breed).OwnsOne(x => x.Specie).Property(x => x.IsActive).HasDefaultValue(true).IsRequired(false);
+
+        builder.OwnsOne(x => x.Breed).Property(x => x.IsActive).HasDefaultValue(true).IsRequired(false);
+
+        builder.HasMany(x => x.UserPets).WithMany(x => x.Pet).UsingEntity(typeof(UserPets));
     }
 }
