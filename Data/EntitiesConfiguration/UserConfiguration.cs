@@ -18,25 +18,25 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Document).HasMaxLength(40).IsRequired(false);
 
-        builder.Property(x => x.DocumentType).IsRequired(false);
+        builder.Property(x => x.DocumentType);
 
-        builder.Property(x => x.CreatedAt).IsRequired(true);
+        builder.Property(x => x.CreatedAt);
 
-        builder.Property(x => x.UpdatedAt).IsRequired(false);
+        builder.Property(x => x.UpdatedAt);
 
-        builder.Property(x => x.IsActive).IsRequired(true).HasDefaultValue(true);
+        builder.Property(x => x.IsActive).HasDefaultValue(true);
 
         builder.Property(x => x.PublicId).IsRequired(true);
 
         builder.Property(x => x.Bio).HasMaxLength(255).IsRequired(false);
 
-        builder.Property(x => x.Birthdate).IsRequired(false);
+        builder.Property(x => x.Birthdate);
 
-        builder.OwnsOne(x => x.File).Property(x => x.Id).IsRequired(false);
+        builder.OwnsOne(x => x.File).Property(x => x.Id);
 
         builder.OwnsOne(x => x.File).Property(x => x.Name).HasMaxLength(100).IsRequired(false);
 
-        builder.OwnsOne(x => x.File).Property(x => x.Type).IsRequired(false);
+        builder.OwnsOne(x => x.File).Property(x => x.Type);
 
         builder.OwnsOne(x => x.File).Property(x => x.PublicLink).HasMaxLength(255).IsRequired(false);
 
@@ -52,8 +52,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Address).HasMaxLength(120).IsRequired(false);
 
-        builder.Property(x => x.UserType).IsRequired(true);
+        builder.Property(x => x.UserType);
 
-        builder.HasMany(x => x.UserPets).WithOne(x => x.User).IsRequired(false);
+        builder.HasMany(x => x.UserPets).WithOne(x => x.User);
     }
 }
