@@ -14,7 +14,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(x => x.PublicId).IsUnique();
 
-        builder.Property(x => x.Name).HasMaxLength(121).IsRequired(false);
+        builder.Property(x => x.Name).HasMaxLength(121).IsRequired(true);
 
         builder.Property(x => x.Document).HasMaxLength(40).IsRequired(false);
 
