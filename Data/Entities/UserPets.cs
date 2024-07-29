@@ -12,6 +12,6 @@
 
         public virtual User User { get; set; }
 
-        public virtual ICollection<Pet> Pets { get; set; }
+        public virtual ICollection<Pet> Pet { get; set; }
     }
 }
