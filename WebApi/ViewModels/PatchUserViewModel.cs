@@ -11,5 +11,5 @@ public record PatchUserViewModel
 
     public string? Address { get; set; }
 
-    public int? FileId { get; set; }
+    public int? ProfileImageId { get; set; }
 }
