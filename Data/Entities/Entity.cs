@@ -1,5 +1,4 @@
 using HelloPets.Data.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace HelloPets.Data.Entities;
 
