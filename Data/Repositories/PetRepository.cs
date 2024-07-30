@@ -19,7 +19,6 @@ public class PetRepository : IPetRepository
     public async Task<Pet> GetPetByIdAsync(int id) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
     public async Task<Pet> GetPetByDocumentAsync(string documentNumber) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().SingleOrDefaultAsync(x => x.Document == documentNumber);
     public async Task<IEnumerable<Pet>> GetPetsByBreedAsync(string breed) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Breed.Name == breed).ToListAsync();
-    public async Task<IEnumerable<Pet>> GetPetsByNicknameAsync(string nickName) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Nickname == nickName).ToListAsync();
     public async Task<IEnumerable<Pet>> GetPetsBySpecieAsync(string specie) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Breed.Specie.Name == specie).ToListAsync();
     public async Task<IEnumerable<Pet>> GetPetsByMicrochip(bool hasMicrochip) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.HasMicroChip == hasMicrochip).ToListAsync();
     public async Task<IEnumerable<Pet>> GetPetsByNeutered(bool hasBeenNeutered) => await _context.Pets.Include(x => x.UserPets).AsNoTracking().Where(x => x.Neutered == hasBeenNeutered).ToListAsync();

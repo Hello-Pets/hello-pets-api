@@ -82,8 +82,8 @@ public class UsersController : BaseController
         if (existingUser.Address != user.Address) 
             existingUser.Address = user.Address;
 
-        if (existingUser.ProfileImageId != user.ProfileImageId) 
-            existingUser.ProfileImageId = user.ProfileImageId;
+        if (existingUser.FileId != user.ProfileImageId) 
+            existingUser.FileId = user.ProfileImageId;
 
         await _tutorRepository.UpdateUserAsync(existingUser);
 

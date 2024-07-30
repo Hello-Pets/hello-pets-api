@@ -24,7 +24,7 @@ public abstract class Entity
     
     public DateTime? Birthdate { get; set; }
     
-    public int? ProfileImageId { get; set; }
+    public int? FileId { get; set; }
     
     public virtual HelloPetsFile? File { get; set; }
     

@@ -1,11 +1,10 @@
 ﻿using HelloPets.Data.Enums;
 
 namespace HelloPets.Data.Entities;
+
 public class Pet : Entity
 {
-    public string Nickname { get; set; }
-    
-    public string Furcolor { get; set; }
+    public string? Furcolor { get; set; }
     
     public bool Neutered { get; set; }
     
@@ -16,8 +15,6 @@ public class Pet : Entity
     public int BreedId { get; set; }
     
     public virtual Breed Breed { get; set; }
-    
-    public virtual ICollection<User> Tutors { get; set; }
     
     public virtual ICollection<Trait> Traits { get; set; }
     
