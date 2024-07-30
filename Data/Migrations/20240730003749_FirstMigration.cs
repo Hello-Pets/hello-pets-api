@@ -16,50 +16,36 @@ namespace Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Pets",
+                name: "HelloPetsFile",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Furcolor = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Neutered = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    HasMicroChip = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    Size = table.Column<int>(type: "int", nullable: false),
-                    BreedId = table.Column<int>(type: "int", nullable: false),
-                    Breed_Id = table.Column<int>(type: "int", nullable: false),
-                    Breed_Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Breed_SpecieId = table.Column<int>(type: "int", nullable: false),
-                    Breed_Specie_Id = table.Column<int>(type: "int", nullable: false),
-                    Breed_Specie_Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Breed_Specie_IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
-                    Breed_IsActive = table.Column<string>(type: "longtext", nullable: true, defaultValue: "True")
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Document = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DocumentType = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
-                    PublicId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Bio = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    FileId = table.Column<int>(type: "int", nullable: true),
-                    File_Id = table.Column<int>(type: "int", nullable: true),
-                    File_Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    File_Type = table.Column<int>(type: "int", nullable: true),
-                    File_PublicLink = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    PublicLink = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pets", x => x.Id);
+                    table.PrimaryKey("PK_HelloPetsFile", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Specie",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specie", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -69,19 +55,80 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true)
+                    Username = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Password = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Salt = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                    Phone = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Address = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true)
+                    Address = table.Column<string>(type: "varchar(122)", maxLength: 122, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserType = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "varchar(121)", maxLength: 121, nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Document = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DocumentType = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
+                    PublicId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Bio = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    FileId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_HelloPetsFile_FileId",
+                        column: x => x.FileId,
+                        principalTable: "HelloPetsFile",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Breed",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SpecieId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Breed", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Breed_Specie_SpecieId",
+                        column: x => x.SpecieId,
+                        principalTable: "Specie",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Pets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Furcolor = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Neutered = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    HasMicroChip = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Size = table.Column<int>(type: "int", nullable: false),
+                    BreedId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Document = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -93,17 +140,22 @@ namespace Data.Migrations
                     Bio = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    FileId = table.Column<int>(type: "int", nullable: true),
-                    File_Id = table.Column<int>(type: "int", nullable: true),
-                    File_Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    File_Type = table.Column<int>(type: "int", nullable: true),
-                    File_PublicLink = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    FileId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Pets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pets_Breed_BreedId",
+                        column: x => x.BreedId,
+                        principalTable: "Breed",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pets_HelloPetsFile_FileId",
+                        column: x => x.FileId,
+                        principalTable: "HelloPetsFile",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -206,6 +258,21 @@ namespace Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Breed_SpecieId",
+                table: "Breed",
+                column: "SpecieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_BreedId",
+                table: "Pets",
+                column: "BreedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_FileId",
+                table: "Pets",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pets_PublicId",
                 table: "Pets",
                 column: "PublicId");
@@ -242,6 +309,11 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_FileId",
+                table: "Users",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_PublicId",
                 table: "Users",
                 column: "PublicId",
@@ -268,6 +340,15 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Breed");
+
+            migrationBuilder.DropTable(
+                name: "HelloPetsFile");
+
+            migrationBuilder.DropTable(
+                name: "Specie");
         }
     }
 }

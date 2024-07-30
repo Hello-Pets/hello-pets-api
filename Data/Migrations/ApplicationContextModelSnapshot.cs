@@ -22,6 +22,56 @@ namespace Data.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("HelloPets.Data.Entities.Breed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("SpecieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecieId");
+
+                    b.ToTable("Breed");
+                });
+
+            modelBuilder.Entity("HelloPets.Data.Entities.HelloPetsFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PublicLink")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HelloPetsFile");
+                });
+
             modelBuilder.Entity("HelloPets.Data.Entities.Pet", b =>
                 {
                     b.Property<int?>("Id")
@@ -58,9 +108,7 @@ namespace Data.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<bool>("HasMicroChip")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -68,14 +116,11 @@ namespace Data.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
                     b.Property<bool>("Neutered")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<Guid>("PublicId")
                         .HasColumnType("char(36)");
@@ -87,6 +132,10 @@ namespace Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BreedId");
+
+                    b.HasIndex("FileId");
 
                     b.HasIndex("PublicId");
 
@@ -149,6 +198,26 @@ namespace Data.Migrations
                     b.ToTable("SpecialNeeds");
                 });
 
+            modelBuilder.Entity("HelloPets.Data.Entities.Specie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specie");
+                });
+
             modelBuilder.Entity("HelloPets.Data.Entities.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -183,8 +252,8 @@ namespace Data.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("Address")
-                        .HasMaxLength(120)
-                        .HasColumnType("varchar(120)");
+                        .HasMaxLength(122)
+                        .HasColumnType("varchar(122)");
 
                     b.Property<string>("Bio")
                         .HasMaxLength(255)
@@ -197,8 +266,8 @@ namespace Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Document")
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar(32)");
 
                     b.Property<int?>("DocumentType")
                         .HasColumnType("int");
@@ -216,17 +285,15 @@ namespace Data.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(121)
-                        .HasColumnType("varchar(121)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Phone")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar(32)");
 
                     b.Property<Guid>("PublicId")
                         .HasColumnType("char(36)");
@@ -241,13 +308,15 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
-                        .HasMaxLength(60)
-                        .HasColumnType("varchar(60)");
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("FileId");
 
                     b.HasIndex("PublicId")
                         .IsUnique();
@@ -281,93 +350,30 @@ namespace Data.Migrations
                     b.ToTable("UserPets");
                 });
 
+            modelBuilder.Entity("HelloPets.Data.Entities.Breed", b =>
+                {
+                    b.HasOne("HelloPets.Data.Entities.Specie", "Specie")
+                        .WithMany()
+                        .HasForeignKey("SpecieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specie");
+                });
+
             modelBuilder.Entity("HelloPets.Data.Entities.Pet", b =>
                 {
-                    b.OwnsOne("HelloPets.Data.Entities.Breed", "Breed", b1 =>
-                        {
-                            b1.Property<int>("PetId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("IsActive")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("longtext")
-                                .HasDefaultValue("True");
-
-                            b1.Property<string>("Name")
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)");
-
-                            b1.Property<int>("SpecieId")
-                                .HasColumnType("int");
-
-                            b1.HasKey("PetId");
-
-                            b1.ToTable("Pets");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PetId");
-
-                            b1.OwnsOne("HelloPets.Data.Entities.Specie", "Specie", b2 =>
-                                {
-                                    b2.Property<int>("BreedPetId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<int>("Id")
-                                        .HasColumnType("int");
-
-                                    b2.Property<bool>("IsActive")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("tinyint(1)")
-                                        .HasDefaultValue(true);
-
-                                    b2.Property<string>("Name")
-                                        .HasMaxLength(30)
-                                        .HasColumnType("varchar(30)");
-
-                                    b2.HasKey("BreedPetId");
-
-                                    b2.ToTable("Pets");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("BreedPetId");
-                                });
-
-                            b1.Navigation("Specie")
-                                .IsRequired();
-                        });
-
-                    b.OwnsOne("HelloPets.Data.Entities.HelloPetsFile", "File", b1 =>
-                        {
-                            b1.Property<int>("PetId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Name")
-                                .HasMaxLength(100)
-                                .HasColumnType("varchar(100)");
-
-                            b1.Property<string>("PublicLink")
-                                .HasMaxLength(255)
-                                .HasColumnType("varchar(255)");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("int");
-
-                            b1.HasKey("PetId");
-
-                            b1.ToTable("Pets");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PetId");
-                        });
-
-                    b.Navigation("Breed")
+                    b.HasOne("HelloPets.Data.Entities.Breed", "Breed")
+                        .WithMany()
+                        .HasForeignKey("BreedId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("HelloPets.Data.Entities.HelloPetsFile", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId");
+
+                    b.Navigation("Breed");
 
                     b.Navigation("File");
                 });
@@ -399,32 +405,9 @@ namespace Data.Migrations
 
             modelBuilder.Entity("HelloPets.Data.Entities.User", b =>
                 {
-                    b.OwnsOne("HelloPets.Data.Entities.HelloPetsFile", "File", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Name")
-                                .HasMaxLength(100)
-                                .HasColumnType("varchar(100)");
-
-                            b1.Property<string>("PublicLink")
-                                .HasMaxLength(255)
-                                .HasColumnType("varchar(255)");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("int");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
+                    b.HasOne("HelloPets.Data.Entities.HelloPetsFile", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId");
 
                     b.Navigation("File");
                 });
