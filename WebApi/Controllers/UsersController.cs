@@ -13,21 +13,21 @@ namespace HelloPets.WebApi.Controllers;
 public class UsersController : BaseController
 {
     private readonly IPasswordService _passwordService;
-    private readonly IUserRepository _tutorRepository;
+    private readonly IUserRepository _userRepository;
 
     public UsersController(ITokenService tokenService, 
             IPasswordService passwordService, 
-            IUserRepository tutorRepository) : base(tokenService)
+            IUserRepository userRepository) : base(tokenService)
     {
         _passwordService = passwordService;
-        _tutorRepository = tutorRepository;
+        _userRepository = userRepository;
     }
 
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> RegisterUser([FromBody] CreateUserViewModel userVM) 
     {
-        if (await _tutorRepository.IsRegistered(userVM.Email))
+        if (await _userRepository.IsRegistered(userVM.Email))
             return BadRequest("Email já cadastrado");
 
         if (userVM.Password.Trim() != userVM.PasswordVerification.Trim())
@@ -52,7 +52,7 @@ public class UsersController : BaseController
             Salt = userVM.Salt,
         };
     
-        await _tutorRepository.CreateUserAsync(user);
+        await _userRepository.CreateUserAsync(user);
     
         return Ok(new ReturnUserViewModel
         {
@@ -68,7 +68,7 @@ public class UsersController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> UpdateUser([FromRoute] Guid publicId, [FromBody] PatchUserViewModel user) 
     {
-        var existingUser = await _tutorRepository.GetUserByPublicIdAsync(publicId);
+        var existingUser = await _userRepository.GetUserByPublicIdAsync(publicId);
 
         if (existingUser == null) 
             return BadRequest("Usuário não existe com Id informado.");
@@ -85,7 +85,7 @@ public class UsersController : BaseController
         if (existingUser.FileId != user.ProfileImageId) 
             existingUser.FileId = user.ProfileImageId;
 
-        await _tutorRepository.UpdateUserAsync(existingUser);
+        await _userRepository.UpdateUserAsync(existingUser);
 
         return NoContent();
     }
@@ -94,7 +94,7 @@ public class UsersController : BaseController
     [HttpDelete("{publicId}")]
     public async Task<IActionResult> DeleteUser([FromRoute] Guid publicId, [FromBody] DeleteUserViewModel userVM) 
     {
-        var user = await _tutorRepository.GetUserByPublicIdAsync(publicId);
+        var user = await _userRepository.GetUserByPublicIdAsync(publicId);
 
         if (user is null) 
             return BadRequest("Usuário não existente.");
@@ -102,7 +102,7 @@ public class UsersController : BaseController
         if (user.Id != userVM.Id)
             return BadRequest("ID do usuário diferente do fornecido.");
 
-        await _tutorRepository.DeleteUserAsync(user);
+        await _userRepository.DeleteUserAsync(user);
 
         return NoContent();
     }
