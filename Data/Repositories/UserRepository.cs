@@ -33,26 +33,26 @@ public class UserRepository : IUserRepository
     public async Task<bool> IsRegistered(string email) =>
         await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.IsActive);
 
-    public async Task<User> CreateUserAsync(User tutor)
+    public async Task<User> CreateUserAsync(User user)
     {
-        var newTutor = await _context.Users.AddAsync(tutor);
+        var newUser = await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 
-        return newTutor.Entity;
+        return newUser.Entity;
     }
 
-    public async Task<User> UpdateUserAsync(User tutor)
+    public async Task<User> UpdateUserAsync(User user)
     {
-        tutor.UpdatedAt = DateTime.UtcNow;
-        var newTutor = _context.Users.Update(tutor);
+        user.UpdatedAt = DateTime.UtcNow;
+        var newUser = _context.Users.Update(user);
         await _context.SaveChangesAsync();
 
-        return newTutor.Entity;
+        return newUser.Entity;
     }
 
-    public async Task DeleteUserAsync(User tutor)
+    public async Task DeleteUserAsync(User user)
     {
-        tutor.IsActive = false;
-        await UpdateUserAsync(tutor);
+        user.IsActive = false;
+        await UpdateUserAsync(user);
     }
 }

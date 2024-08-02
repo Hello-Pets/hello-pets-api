@@ -48,13 +48,13 @@ namespace HelloPets.Services.ApplicationServices;
             }
         }
 
-        private static IEnumerable<Claim> GetClaims(User tutor)
+        private static IEnumerable<Claim> GetClaims(User user)
         {
             return
             [
-                new Claim("id", tutor.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Name, tutor.Name),
-                new Claim(JwtRegisteredClaimNames.Email, tutor.Email),
+                new Claim("id", user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
 
                 //Insere a data de criacao do token ao token
                 new Claim(JwtRegisteredClaimNames.Iat,
